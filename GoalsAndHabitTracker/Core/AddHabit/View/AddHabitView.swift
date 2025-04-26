@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct AddhHabitView: View {
+struct AddHabitView: View {
     
     @Environment(\.dismiss) var dismiss
     @State var animate: Bool = false
@@ -205,5 +205,6 @@ struct AddhHabitView: View {
 }
 
 #Preview {
-    AddHabitButtonBar(title: "dssdfd", color: .blue, icon: "😁")
+    AddHabitView()
+        .environmentObject(AddCustomHabitViewModel())
 }

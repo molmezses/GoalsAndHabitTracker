@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @State private var showAddView = false
     @State var animate: Bool = false
+    @EnvironmentObject var viewModel: HabitBarSettingsViewModel
+
     
 
     var body: some View {
@@ -75,6 +77,7 @@ struct HomeView: View {
 
                         }
                     }
+                    .background(viewModel.barStyle7 ? Color(.systemGroupedBackground) : Color.white)
                 }
 
                 HStack {
@@ -98,7 +101,7 @@ struct HomeView: View {
                 }
             }
             .fullScreenCover(isPresented: $showAddView) {
-                AddhHabitView()
+                AddHabitView()
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
             }
@@ -117,5 +120,7 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(HabitBarSettingsViewModel())
+        .environmentObject(AddCustomHabitViewModel())
 }
 

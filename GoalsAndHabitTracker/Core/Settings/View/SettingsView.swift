@@ -101,7 +101,8 @@ struct SettingsView: View {
                             ButtonBar(title: "Language", color: .yellow, icon: "textformat")
                             ButtonBar(title: "Dark Mode", color: .purple, icon: "moon.circle")
                             NavigationLink {
-                                
+                                HabitBarSettings()
+                                    .navigationBarBackButtonHidden()
                             } label: {
                                 ButtonBar(title: "Customize Habit Bar", color: .green, icon: "menucard.fill")
                             }
@@ -141,6 +142,7 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(HabitBarSettingsViewModel())
 }
 
 

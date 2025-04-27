@@ -11,6 +11,8 @@ struct HomeView: View {
     @State private var showAddView = false
     @State var animate: Bool = false
     @EnvironmentObject var viewModel: HabitBarSettingsViewModel
+    @EnvironmentObject var habitViewModel: AddCustomHabitViewModel
+
 
     
 
@@ -61,7 +63,6 @@ struct HomeView: View {
                         ScrollView {
                             VStack {
                          
-
                                 ForEach(Habit.MOCK_HABIT) { habit in
                                     NavigationLink {
                                         ProgressView( habit: habit)
@@ -72,6 +73,17 @@ struct HomeView: View {
                                     .foregroundColor(.black)
 
                                 }
+                                ForEach(habitViewModel.habits) { habit in
+                                    NavigationLink {
+                                        ProgressView( habit: habit)
+                                            .navigationBarBackButtonHidden()
+                                    } label: {
+                                        HabitItem(habit: habit)
+                                    }
+                                    .foregroundColor(.black)
+
+                                }
+                               
                             }
                             .padding(.top)
 
@@ -122,5 +134,6 @@ struct HomeView: View {
     HomeView()
         .environmentObject(HabitBarSettingsViewModel())
         .environmentObject(AddCustomHabitViewModel())
+        .environmentObject(HabitViewModel())
 }
 

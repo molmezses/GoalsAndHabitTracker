@@ -39,7 +39,9 @@ struct AddCustomHabitView: View {
 
             Spacer()
 
-            Button(action: {/* viewModel.createHabit()*/ }) {
+            Button(action: {
+                viewModel.createHabit()
+            }) {
                 Text("Save")
                     .foregroundStyle(.white)
                     .font(.headline)
@@ -349,6 +351,22 @@ struct EmojiPickerView: View {
 }
 
 
+// Color Extension to handle hex
+extension Color {
+    init(hex: String) {
+        let hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "#", with: "")
+        let scanner = Scanner(string: hexString)
+        var hexValue: UInt64 = 0
+        scanner.scanHexInt64(&hexValue)
+        
+        let red = Double((hexValue & 0xFF0000) >> 16) / 255.0
+        let green = Double((hexValue & 0x00FF00) >> 8) / 255.0
+        let blue = Double(hexValue & 0x0000FF) / 255.0
+        
+        self.init(red: red, green: green, blue: blue)
+    }
+}
+
 
 
 
@@ -356,5 +374,6 @@ struct AddCustomHabitView_Previews: PreviewProvider {
     static var previews: some View {
         AddCustomHabitView()
             .environmentObject(AddCustomHabitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }

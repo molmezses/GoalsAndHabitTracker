@@ -10,6 +10,9 @@ import Foundation
 
 
 class AddCustomHabitViewModel: ObservableObject {
+    
+    @Published var habits: [Habit] = []
+    private let habitService = HabitService()
         
     @Published var title: String = ""
     @Published var selectedEmoji: String = "🔥"
@@ -24,22 +27,52 @@ class AddCustomHabitViewModel: ObservableObject {
     @Published var selectedDays: Set<String> = []
     @Published var animate: Bool = false
     @Published var rapor: Bool = false
-    @Published var colors: [Color] = [.red, .green, .blue, .yellow, .orange]
-    
-    @Published var habits: [Habit] = []
+    @Published var colors: [Color] = [
+        Color(hex: "#FF3B30"), // Kırmızı
+        Color(hex: "#34C759"), // Yeşil
+        Color(hex: "#007AFF"), // Mavi
+        Color(hex: "#FF9500"), // Turuncu
+        Color(hex: "#AF52DE")  // Mor
+    ]
 
+    
+
+    init() {
+        Task {
+            for await newHabits in habitService.listenHabits() {
+                await MainActor.run {
+                    self.habits = newHabits
+                }
+            }
+        }
+    }
     
 
     func createHabit() {
-        let habit = Habit(id: UUID().uuidString, title: title, emoji: selectedEmoji, current: 78, total: Double(targetAmount) ?? 100, color: color, isCompleted: false, sound: "", category: selectedUnit, reminderTime: reminderTime, reminderDays: "Everyday", complatedDayCount: 0, complatedDay: ["27 April 2025"], missing: 0, longestSeries: 0, startingDay: "23 Sep 2025")
-        
-        habits.append(habit)
-        
-        
-        
+        let habit = Habit(
+            id: UUID().uuidString,
+            title: title,
+            emoji: selectedEmoji,
+            current: 0,
+            total: Double(targetAmount) ?? 100,
+            colorHex: color.toHex() ?? "#FF0000",
+            isCompleted: false,
+            sound: "",
+            category: selectedUnit,
+            reminderTime: reminderTime,
+            reminderDays: "Everyday",
+            complatedDayCount: 0,
+            complatedDay: [],
+            missing: 0,
+            longestSeries: 0,
+            startingDay: DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none)
+        )
+
+        Task {
+            try await habitService.addHabit(habit)
+        }
     }
 }
-
 
 
 

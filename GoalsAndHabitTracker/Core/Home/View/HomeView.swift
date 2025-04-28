@@ -134,6 +134,5 @@ struct HomeView: View {
     HomeView()
         .environmentObject(HabitBarSettingsViewModel())
         .environmentObject(AddCustomHabitViewModel())
-        .environmentObject(HabitViewModel())
 }
 

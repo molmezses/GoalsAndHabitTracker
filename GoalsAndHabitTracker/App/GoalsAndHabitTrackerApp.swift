@@ -6,17 +6,30 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseCore
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+    return true
+  }
+}
+
 
 @main
 struct GoalsAndHabitTrackerApp: App {
-    @StateObject private var habitVM = HabitViewModel() // HabitViewModel'i başlatıyoruz
-    @StateObject private var addCustomHabitVM = AddCustomHabitViewModel() // AddCustomHabitViewModel'i başlatıyoruz
+    @StateObject private var addCustomHabitVM = AddCustomHabitViewModel()
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
         WindowGroup {
-            AddCustomHabitView()
-                .environmentObject(habitVM) // HabitViewModel'i environmentObject olarak sağlıyoruz
-                .environmentObject(addCustomHabitVM) // AddCustomHabitViewModel'i environmentObject olarak sağlıyoruz
+            HomeView()
+                .environmentObject(addCustomHabitVM)
+                .environmentObject(HabitBarSettingsViewModel())
         }
     }
 }

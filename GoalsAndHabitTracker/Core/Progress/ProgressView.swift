@@ -192,8 +192,4 @@ struct ProgressView: View {
 }
 
 
-//habit.current = min(habit.current + 10, habit.total)
-//habit.current = max(habit.current - 10, 0)
-//habit.current = 0
-
 

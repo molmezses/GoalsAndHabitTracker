@@ -7,34 +7,38 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestore
 
 
-struct Habit: Identifiable , Hashable {
-    let id: String
-    let title: String
-    let emoji: String
+
+
+struct Habit: Identifiable, Codable {
+    @DocumentID var id: String? // Firestore'daki document id
+    var title: String
+    var emoji: String
     var current: Double
     var total: Double
-    let color: Color
-    let isCompleted: Bool
-    let sound: String
-    let category: String
-    let reminderTime : Date
-    let reminderDays: String
-    let complatedDayCount: Int
-    let complatedDay: [String]
-    let missing: Int
-    let longestSeries: Int
-    let startingDay: String
-    
+    var colorHex: String // <-- BU VAR
+    var isCompleted: Bool
+    var sound: String
+    var category: String
+    var reminderTime: Date
+    var reminderDays: String
+    var complatedDayCount: Int
+    var complatedDay: [String]
+    var missing: Int
+    var longestSeries: Int
+    var startingDay: String
+
+    // colorHex'i kullanarak hesaplanan yardımcı alan
+    var color: Color {
+        Color(hex: colorHex)
+    }
 }
+
 
 extension Habit{
     static var MOCK_HABIT: [Habit] = [
-        .init(id: UUID().uuidString, title: "Drink a water", emoji: "💧", current: 60, total: 500, color: .blue, isCompleted: false, sound: "default", category: "health", reminderTime: Date(), reminderDays: "everyday", complatedDayCount: 9, complatedDay: ["1 April 2025", "4 April 2025", "7 April 2025", "10 April 2025", "13 April 2025","17 April 2025", "20 April 2025", "24 April 2025", "27 April 2025", "30 April 2025",], missing: 6, longestSeries: 12, startingDay: "21 Sep 25"),
-        .init(id: UUID().uuidString, title: "Read a Book", emoji: "📚", current: 35, total: 50, color: .green, isCompleted: false, sound: "default", category: "health", reminderTime: Date(), reminderDays: "everyday", complatedDayCount: 9, complatedDay: ["1 April 2025", "4 April 2025", "7 April 2025", "10 April 2025", "14 April 2025","17 April 2025", "20 April 2025", "24 April 2025", "27 April 2025", "30 April 2025",], missing: 6, longestSeries: 12, startingDay: "21 Sep 25"),
-        .init(id: UUID().uuidString, title: "Gym", emoji: "💪🏻", current: 20, total: 55, color: .orange, isCompleted: true, sound: "default", category: "health", reminderTime: Date(), reminderDays: "everyday", complatedDayCount: 9, complatedDay: ["1 April 2025", "4 April 2025", "7 April 2025", "10 April 2025", "14 April 2025","17 April 2025", "20 April 2025", "24 April 2025", "27 April 2025", "30 April 2025",], missing: 6, longestSeries: 12, startingDay: "21 Sep 25"),
-        .init(id: UUID().uuidString, title: "Watering the flowers", emoji: "🌺", current: 5, total: 5, color: .pink, isCompleted: true, sound: "default", category: "health", reminderTime: Date() ,reminderDays: "everyday", complatedDayCount: 9, complatedDay: ["1 April 2025", "4 April 2025", "7 April 2025", "10 April 2025", "14 April 2025","17 April 2025", "20 April 2025", "24 April 2025", "27 April 2025", "30 April 2025",], missing: 6, longestSeries: 12, startingDay: "21 Sep 25"),
-        .init(id: UUID().uuidString, title: "aaa", emoji: "🐈", current: 1, total: 2, color: .indigo, isCompleted: false, sound: "default", category: "health", reminderTime: Date(), reminderDays: "everyday", complatedDayCount: 9, complatedDay: ["1 April 2025", "4 April 2025", "7 April 2025", "10 April 2025", "14 April 2025","17 April 2025", "20 April 2025", "24 April 2025", "27 April 2025", "30 April 2025",], missing: 6, longestSeries: 12, startingDay: "21 Sep 25"),
+        Habit(title: "sddsf", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDayCount: 23, complatedDay: [""], missing: 0, longestSeries: 0, startingDay: "")
     ]
 }

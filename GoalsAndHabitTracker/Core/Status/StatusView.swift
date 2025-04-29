@@ -12,6 +12,8 @@ struct StatusView: View {
     let daysOfWeek: [String] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
     let daysOfWeekColumns = Array(repeating: GridItem(.flexible()), count: 7)
     
+    @EnvironmentObject var viewModel: StatusViewModel
+    
     @State var currentMonth: Int = Calendar.current.component(.month, from: Date())
     @State var currentYear: Int = Calendar.current.component(.year, from: Date())
     @Environment(\.dismiss) var dismiss
@@ -111,18 +113,23 @@ struct StatusView: View {
                             //Jetonlar
                             VStack(spacing: 8) {
                                 HStack(spacing: 8) {
-                                    InfoCard(title: "10 Days", subtitle: "Completed", icon: "checkmark", color: .green)
-                                    InfoCard(title: "4 Days", subtitle: "Missing", icon: "xmark", color: .red)
+                                    InfoCard(title: "\(habit.complatedDayCount)" , subtitle: "Completed", icon: "checkmark", color: .green)
+                                    InfoCard(title: "\(habit.missing)", subtitle: "Missing", icon: "xmark", color: .red)
                                 }
                                 
                                 HStack(spacing: 8) {
-                                    InfoCard(title: "89%", subtitle: "Month Goals", icon: "checkmark.rectangle.stack", color: .purple)
-                                    InfoCard(title: "21 Days", subtitle: "Longest Series", icon: "figure.run.treadmill", color: .blue)
+                                    InfoCard(title: "100%", subtitle: "Month Goals", icon: "checkmark.rectangle.stack", color: .purple)
+                                    InfoCard(title: "\(habit.longestSeries)", subtitle: "Longest Series", icon: "figure.run.treadmill", color: .blue)
                                 }
                                 
                                 HStack(spacing: 8) {
-                                    InfoCard(title: "12 Sep 25", subtitle: "Starting Day", icon: "calendar", color: .orange)
-                                    InfoCard(title: "21 Days", subtitle: "Reminder Time", icon: "clock.badge.checkmark", color: .mint)
+                                    InfoCard(title: "\(habit.startingDay)", subtitle: "Starting Day", icon: "calendar", color: .orange)
+                                    InfoCard(
+                                        title: viewModel.dateFormatHours(habit.reminderTime),
+                                        subtitle: "Reminder Time",
+                                        icon: "clock.badge.checkmark",
+                                        color: .mint
+                                    )
                                 }
                             }
                             .padding(.horizontal)
@@ -170,12 +177,29 @@ struct StatusView: View {
             .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         }
     }
+    
+    func formattedFullDate(day: Int, month: Int, year: Int) -> String {
+        var components = DateComponents()
+        components.day = day
+        components.month = month
+        components.year = year
+        
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM yyyy" // Örn: "29 April 2025"
+        
+        if let date = calendar.date(from: components) {
+            return formatter.string(from: date)
+        }
+        return ""
+    }
+
 
     
     // 📌 AYIN FORMATINI DÜZENLER
     func formattedMonthYear(month: Int, year: Int) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM yyyy"
+        dateFormatter.dateFormat = "MMMM"
         
         var components = DateComponents()
         components.year = year
@@ -230,18 +254,19 @@ struct StatusView: View {
 
     // 📌 TAKVİMDEKİ GÜNÜN YAZI RENGİNİ BELİRLER
     func getTextColor(for day: CalendarDay) -> Color {
-        let formattedDate = "\(day.day) \(formattedMonthYear(month: currentMonth, year: currentYear))"
+        let formattedDate = formattedFullDate(day: day.day, month: currentMonth, year: currentYear)
         
         if day.isCurrentMonth, habit.complatedDay.contains(formattedDate) {
-            return .white // İşaretli günlerde beyaz yazı
-        }
-        
-        if day.isCurrentMonth {
-            return .black // Normal günlerde siyah yazı
+            return .white
         }
 
-        return .gray // Diğer aylardan olan günler
+        if day.isCurrentMonth {
+            return .black
+        }
+
+        return .gray
     }
+
 
     
     // 📌 BELİRLİ BİR AYIN GÜN SAYISINI DÖNDÜRÜR
@@ -261,18 +286,19 @@ struct StatusView: View {
 
     // 📌 TAKVİMDEKİ GÜNÜN ARKA PLAN RENGİNİ BELİRLER
     func getBackgroundColor(for day: CalendarDay) -> Color {
-        let formattedDate = "\(day.day) \(formattedMonthYear(month: currentMonth, year: currentYear))"
-
+        let formattedDate = formattedFullDate(day: day.day, month: currentMonth, year: currentYear)
+        
         if day.isCurrentMonth, habit.complatedDay.contains(formattedDate) {
-            return habit.color // ✅ İşaretli günler için yeşil
+            return habit.color
         }
 
         if day.isCurrentMonth {
-            return habit.color.opacity(0.2) // 🌿 Diğer günler için açık yeşil
+            return habit.color.opacity(0.2)
         }
-        
-        return .clear // Önceki ve sonraki ayların günleri
+
+        return .clear
     }
+
 
 
 
@@ -316,4 +342,5 @@ struct CalendarDay: Hashable {
 
 #Preview {
     StatusView(habit: Habit.MOCK_HABIT[0])
+        .environmentObject(StatusViewModel())
 }

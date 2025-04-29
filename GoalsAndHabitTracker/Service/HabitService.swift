@@ -42,5 +42,20 @@ class HabitService {
             }
         }
     }
+    
+    func updateHabit(_ habit: Habit)  async throws {
+        guard let habitId = habit.id else {
+            throw NSError(domain: "HATA : Böyle bir habit bulanumadı", code: -1)
+        }
+        
+        try  db.collection("users")
+            .document(userId)
+            .collection("habits")
+            .document(habitId)
+            .setData(from: habit, merge: true) //Merge true yazılmasıının sebebi sadece değişen veriler güncellenecek belgeler sıfırlanmayacak
+        
+    }
+    
+    
 }
 

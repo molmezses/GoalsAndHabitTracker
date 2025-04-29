@@ -62,27 +62,29 @@ struct HomeView: View {
                     ZStack {
                         ScrollView {
                             VStack {
-                         
-                                ForEach(Habit.MOCK_HABIT) { habit in
-                                    NavigationLink {
-                                        ProgressView( habit: habit)
-                                            .navigationBarBackButtonHidden()
-                                    } label: {
-                                        HabitItem(habit: habit)
-                                    }
-                                    .foregroundColor(.black)
-
-                                }
+                                
+                                
                                 ForEach(habitViewModel.habits) { habit in
+                                    let update: (Habit) -> Void = { updatedHabit in
+                                        Task {
+                                            do {
+                                                try await HabitService().updateHabit(updatedHabit)
+                                            } catch {
+                                                print("HATA: Firestore güncelleme hatası \(error.localizedDescription)")
+                                            }
+                                        }
+                                    }
+
                                     NavigationLink {
-                                        ProgressView( habit: habit)
+                                        ProgressView(habit: habit, updateHabit: update)
                                             .navigationBarBackButtonHidden()
                                     } label: {
                                         HabitItem(habit: habit)
                                     }
                                     .foregroundColor(.black)
-
                                 }
+
+
                                
                             }
                             .padding(.top)
@@ -134,5 +136,6 @@ struct HomeView: View {
     HomeView()
         .environmentObject(HabitBarSettingsViewModel())
         .environmentObject(AddCustomHabitViewModel())
+    
 }
 

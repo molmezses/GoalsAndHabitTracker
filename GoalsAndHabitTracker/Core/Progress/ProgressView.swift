@@ -5,19 +5,21 @@
 //  Created by Mustafa Ölmezses on 22.04.2025.
 //
 
+
 import SwiftUI
 
 struct ProgressView: View {
     
     @Environment(\.dismiss) var dismiss
     @State private var showSheet = false
-    @State var animate:Bool = false
+    @State var animate: Bool = false
     @State var habit: Habit
+    var updateHabit: (Habit) -> Void 
 
-    
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             VStack(spacing: 0) {
+                
                 // Header
                 HStack {
                     Button {
@@ -59,8 +61,7 @@ struct ProgressView: View {
                     
                     Circle()
                         .trim(from: 0, to: Double(habit.current / habit.total))
-                        .stroke(habit.color ,style: StrokeStyle(lineWidth: 12, lineCap: .round)
-                        )
+                        .stroke(habit.color ,style: StrokeStyle(lineWidth: 12, lineCap: .round))
                         .rotationEffect(.degrees(-90))
                         .animation(.easeInOut, value: habit.current)
                     
@@ -77,8 +78,6 @@ struct ProgressView: View {
                             Text("\(Int(habit.total))")
                         }
                         .foregroundStyle(.gray)
-                        
-                        
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.5)
@@ -90,13 +89,13 @@ struct ProgressView: View {
                     animate = true
                 }
                 
-                
                 // Buttons
                 VStack(spacing: 4) {
                     HStack(spacing: 12) {
                         
                         Button {
                             habit.current = max(habit.current - 10, 0)
+                            updateHabit(habit) // ✅ Güncelle
                         } label: {
                             Image(systemName: "minus")
                                 .foregroundStyle(.black)
@@ -108,6 +107,7 @@ struct ProgressView: View {
                         
                         Button {
                             habit.current = habit.total
+                            updateHabit(habit) // ✅ Güncelle
                         } label: {
                             Image(systemName: "checkmark")
                                 .imageScale(.large)
@@ -118,10 +118,9 @@ struct ProgressView: View {
                                 .mask(Circle())
                         }
                         
-                        
-                        
                         Button {
                             habit.current = min(habit.current + 10, habit.total)
+                            updateHabit(habit) // ✅ Güncelle
                         } label: {
                             Image(systemName: "plus")
                                 .foregroundStyle(.black)
@@ -131,19 +130,16 @@ struct ProgressView: View {
                                 .clipShape(Circle())
                         }
                         .padding(.leading , 6)
-
-                        
                     }
                 }
                 .padding(.bottom)
                 .opacity(animate ? 1 : 0)
                 .offset(y: animate ? 0 : 20)
                 .animation(.easeInOut(duration: 0.6), value: animate)
-
                 
                 Spacer()
                 
-                
+                // Bottom Buttons
                 HStack {
                     Button {
                         showSheet.toggle()
@@ -167,29 +163,27 @@ struct ProgressView: View {
                             .background(Color(.systemGroupedBackground))
                             .clipShape(Circle())
                     }
-
                 }
                 .fullScreenCover(isPresented: $showSheet) {
                     StatusView(habit: habit)
+                        .environmentObject(StatusViewModel())
+
                 }
                 .opacity(animate ? 1 : 0)
                 .offset(y: animate ? 0 : 20)
                 .animation(.easeInOut(duration: 0.6), value: animate)
-                .onAppear {
-                    animate = true
-                }
+                
                 Spacer()
             }
-
-            
-            
         }
     }
 }
 
 #Preview {
-    ProgressView(habit: Habit.MOCK_HABIT[2])
+    ProgressView(habit: Habit.MOCK_HABIT[0]) { _ in }
+        .environmentObject(StatusViewModel())
 }
+
 
 
 

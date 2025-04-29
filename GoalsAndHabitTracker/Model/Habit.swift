@@ -13,12 +13,12 @@ import FirebaseFirestore
 
 
 struct Habit: Identifiable, Codable {
-    @DocumentID var id: String? // Firestore'daki document id
+    @DocumentID var id: String?
     var title: String
     var emoji: String
     var current: Double
     var total: Double
-    var colorHex: String // <-- BU VAR
+    var colorHex: String
     var isCompleted: Bool
     var sound: String
     var category: String
@@ -39,6 +39,8 @@ struct Habit: Identifiable, Codable {
 
 extension Habit{
     static var MOCK_HABIT: [Habit] = [
-        Habit(title: "sddsf", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDayCount: 23, complatedDay: [""], missing: 0, longestSeries: 0, startingDay: "")
+        Habit(title: "asdasd", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDayCount: 23, complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: ""),
+        Habit(title: "asdasd", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDayCount: 23, complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: ""),
+        Habit(title: "123123123", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDayCount: 23, complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: "")
     ]
 }

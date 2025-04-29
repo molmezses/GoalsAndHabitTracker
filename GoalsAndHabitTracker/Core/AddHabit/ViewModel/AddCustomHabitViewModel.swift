@@ -72,6 +72,8 @@ class AddCustomHabitViewModel: ObservableObject {
             try await habitService.addHabit(habit)
         }
     }
+    
+    
 }
 
 

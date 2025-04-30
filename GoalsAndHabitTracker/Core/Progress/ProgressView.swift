@@ -15,6 +15,7 @@ struct ProgressView: View {
     @State var animate: Bool = false
     @State var habit: Habit
     var updateHabit: (Habit) -> Void
+    @EnvironmentObject var viewModel: ProgressViewModel
 
     var body: some View {
         NavigationStack {
@@ -95,6 +96,7 @@ struct ProgressView: View {
                         
                         Button {
                             habit.current = max(habit.current - 10, 0)
+                            viewModel.fetchCompletedDay(habit: &habit)
                             updateHabit(habit) // ✅ Güncelle
                         } label: {
                             Image(systemName: "minus")
@@ -120,6 +122,11 @@ struct ProgressView: View {
                         
                         Button {
                             habit.current = min(habit.current + 10, habit.total)
+                            if habit.current == habit.total {
+                                print("oldu")
+                                let date = viewModel.formattedTodayDate()
+                                habit.complatedDay.append(date)
+                            }
                             updateHabit(habit) // ✅ Güncelle
                         } label: {
                             Image(systemName: "plus")
@@ -182,6 +189,7 @@ struct ProgressView: View {
 #Preview {
     ProgressView(habit: Habit.MOCK_HABIT[0]) { _ in }
         .environmentObject(StatusViewModel())
+        .environmentObject(ProgressViewModel())
 }
 
 

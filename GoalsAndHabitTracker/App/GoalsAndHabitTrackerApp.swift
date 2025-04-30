@@ -31,6 +31,7 @@ struct GoalsAndHabitTrackerApp: App {
                 .environmentObject(addCustomHabitVM)
                 .environmentObject(HabitBarSettingsViewModel())
                 .environmentObject(StatusViewModel())
+                .environmentObject(ProgressViewModel())
 
         }
     }

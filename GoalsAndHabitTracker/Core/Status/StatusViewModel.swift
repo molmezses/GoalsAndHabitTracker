@@ -46,6 +46,8 @@ class StatusViewModel: ObservableObject {
                currentYear == today.year &&
                day.isCurrentMonth
     }
+    
+   
 
 
 

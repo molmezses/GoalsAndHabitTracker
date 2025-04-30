@@ -61,16 +61,22 @@ class AddCustomHabitViewModel: ObservableObject {
             category: selectedUnit,
             reminderTime: reminderTime,
             reminderDays: "Everyday",
-            complatedDayCount: 0,
             complatedDay: [],
             missing: 0,
             longestSeries: 0,
-            startingDay: DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none)
+            startingDay: formattedDayMonth(from: Date())
         )
 
         Task {
             try await habitService.addHabit(habit)
         }
+    }
+    
+    func formattedDayMonth(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX") // Tarafsız sabit format
+        formatter.dateFormat = "d MMMM" // 29 April
+        return formatter.string(from: date)
     }
     
     

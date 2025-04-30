@@ -14,7 +14,7 @@ struct ProgressView: View {
     @State private var showSheet = false
     @State var animate: Bool = false
     @State var habit: Habit
-    var updateHabit: (Habit) -> Void 
+    var updateHabit: (Habit) -> Void
 
     var body: some View {
         NavigationStack {
@@ -183,7 +183,6 @@ struct ProgressView: View {
     ProgressView(habit: Habit.MOCK_HABIT[0]) { _ in }
         .environmentObject(StatusViewModel())
 }
-
 
 
 

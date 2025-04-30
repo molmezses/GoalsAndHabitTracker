@@ -19,6 +19,7 @@ struct StatusView: View {
     @Environment(\.dismiss) var dismiss
     @State var animate: Bool = false
     let habit: Habit
+    
 
 
     var body: some View {
@@ -83,12 +84,28 @@ struct StatusView: View {
                                 LazyVGrid(columns: daysOfWeekColumns, spacing: 10) {
                                     // Günleri gösteren kısımda güncelleme:
                                     ForEach(generateCalendarDays(), id: \.self) { day in
-                                        Text("\(day.day)")
-                                            .frame(width: 40, height: 40)
-                                            .background(getBackgroundColor(for: day))
-                                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                                            .foregroundStyle(getTextColor(for: day))
+                                        VStack(spacing: 4) {
+                                            ZStack {
+                                                Text("\(day.day)")
+                                                    .foregroundStyle(getTextColor(for: day))
+                                                
+                                                if viewModel.isToday(day: day, currentMonth: currentMonth, currentYear: currentYear) {
+                                                    Circle()
+                                                        .fill(.red)
+                                                        .frame(width: 10, height: 10)
+                                                        .offset(y:14)
+                                                } else {
+                                                    Color.clear
+                                                        .frame(width: 6, height: 6)
+                                                }
+                                            }
+                                        }
+                                        .frame(width: 40, height: 40)
+                                        .background(getBackgroundColor(for: day))
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
                                     }
+
+
                                     
                                 }
                                 .opacity(animate ? 1 : 0)
@@ -118,7 +135,7 @@ struct StatusView: View {
                                 }
                                 
                                 HStack(spacing: 8) {
-                                    InfoCard(title: "100%", subtitle: "Month Goals", icon: "checkmark.rectangle.stack", color: .purple)
+                                    InfoCard(title: viewModel.currentMonthCompletionPercentage(habit), subtitle: "Monthly Goals", icon: "checkmark.rectangle.stack", color: .purple)
                                     InfoCard(title: "\(habit.longestSeries)", subtitle: "Longest Series", icon: "figure.run.treadmill", color: .blue)
                                 }
                                 
@@ -267,6 +284,7 @@ struct StatusView: View {
         return .gray
     }
 
+    
 
     
     // 📌 BELİRLİ BİR AYIN GÜN SAYISINI DÖNDÜRÜR
@@ -343,4 +361,4 @@ struct CalendarDay: Hashable {
 #Preview {
     StatusView(habit: Habit.MOCK_HABIT[0])
         .environmentObject(StatusViewModel())
-}
+} 

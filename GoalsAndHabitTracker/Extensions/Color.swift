@@ -23,7 +23,7 @@ extension Color {
 
 extension Color {
     init(hex: String) {
-        var hexSanitized = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        let hexSanitized = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var rgb: UInt64 = 0
 
         Scanner(string: hexSanitized).scanHexInt64(&rgb)

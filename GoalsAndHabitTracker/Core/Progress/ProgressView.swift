@@ -96,7 +96,8 @@ struct ProgressView: View {
                         
                         Button {
                             habit.current = max(habit.current - 10, 0)
-                            viewModel.fetchCompletedDay(habit: &habit)
+                            viewModel.fetchCompletedDayAndRemove(habit: &habit)
+                            habit.missing = viewModel.calcMissingDay(habit: habit)
                             updateHabit(habit) // ✅ Güncelle
                         } label: {
                             Image(systemName: "minus")
@@ -106,6 +107,9 @@ struct ProgressView: View {
                                 .background(Color(.systemGroupedBackground))
                                 .clipShape(Circle())
                         }
+                        
+                        
+                        
                         
                         Button {
                             habit.current = habit.total
@@ -137,6 +141,8 @@ struct ProgressView: View {
                                 .clipShape(Circle())
                         }
                         .padding(.leading , 6)
+                        .disabled(viewModel.disableButton(habit: habit))
+                        .opacity(viewModel.disableButton(habit: habit) ? 0 : 1)
                     }
                 }
                 .padding(.bottom)

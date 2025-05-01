@@ -41,8 +41,9 @@ struct ProgressView: View {
                     
                     Spacer()
                     
-                    Button {
-                        // settings or edit action
+                    NavigationLink {
+                        UpdateView(habit: habit)
+                            .navigationBarBackButtonHidden()
                     } label: {
                         Image(systemName: "ellipsis")
                             .rotationEffect(.degrees(90))
@@ -51,6 +52,7 @@ struct ProgressView: View {
                             .padding(8)
                             .clipShape(Circle())
                     }
+                    .foregroundStyle(.black)
                 }
                 .padding()
 

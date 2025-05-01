@@ -9,6 +9,8 @@ import SwiftUI
 struct UpdateView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: UpdateViewModel
+    var habit: Habit
+
 
 
     var body: some View {
@@ -19,6 +21,9 @@ struct UpdateView: View {
             }
             .sheet(isPresented: $viewModel.showingColorSheet) {
                 colorPickerSheet
+            }
+            .onAppear{
+                viewModel.loadHabit(habit: habit)
             }
         }
     }
@@ -33,14 +38,14 @@ struct UpdateView: View {
             }
 
             Text(viewModel.selectedEmoji)
-            Text("Add a custom habit")
+            Text("Update Habit")
                 .font(.headline)
                 .fontWeight(.bold)
 
             Spacer()
 
             Button(action: {
-                viewModel.createHabit()
+                viewModel.createHabit(habit: habit)
             }) {
                 Text("Save")
                     .foregroundStyle(.white)
@@ -350,10 +355,8 @@ struct EmojiPickerViewUpdate: View {
     }
 }
 
-
-
-
 #Preview {
-    UpdateView()
-        .environmentObject(UpdateViewModel())
+    UpdateView(habit: Habit.MOCK_HABIT[0])
 }
+
+

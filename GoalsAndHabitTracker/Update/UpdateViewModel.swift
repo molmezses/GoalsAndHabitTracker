@@ -15,12 +15,13 @@ class UpdateViewModel: ObservableObject {
     
     
     @Published var title: String = ""
-    @Published var selectedEmoji: String = "🔥"
+    @Published var selectedEmoji: String = ""
     @Published var color: Color = .red
     @Published var showingColorSheet: Bool = false
     @Published var showingEmojiSheet: Bool = false
-    @Published var targetAmount: String = "100"
-    @Published var selectedUnit: String = "Adet"
+    @Published var completedDay: [String] = []
+    @Published var targetAmount: String = ""
+    @Published var selectedUnit: String = ""
     @Published var reminderIsOn: Bool = false
     @Published var reminderTime: Date = Date()
     @Published var weekdays: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -34,15 +35,26 @@ class UpdateViewModel: ObservableObject {
         Color(hex: "#FF9500"), // Turuncu
         Color(hex: "#AF52DE")  // Mor
     ]
+    
+    func loadHabit(habit: Habit){
+        title = habit.title
+        selectedEmoji = habit.emoji
+        color = habit.color
+        targetAmount = ("\(habit.total)")
+        selectedUnit = habit.category
+        reminderTime = habit.reminderTime
+        completedDay = habit.complatedDay
+        
+    }
 
     
 
-    func createHabit() {
+    func createHabit(habit: Habit) {
         let habit = Habit(
-            id: UUID().uuidString,
+            id: habit.id,
             title: title,
             emoji: selectedEmoji,
-            current: 0,
+            current: habit.current,
             total: Double(targetAmount) ?? 100,
             colorHex: color.toHex() ?? "#FF0000",
             isCompleted: false,
@@ -50,7 +62,7 @@ class UpdateViewModel: ObservableObject {
             category: selectedUnit,
             reminderTime: reminderTime,
             reminderDays: "Everyday",
-            complatedDay: [],
+            complatedDay: habit.complatedDay,
             missing: 0,
             longestSeries: 0,
             startingDay: formattedDayMonth(from: Date())

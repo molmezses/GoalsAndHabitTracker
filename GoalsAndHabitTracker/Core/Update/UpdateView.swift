@@ -10,6 +10,7 @@ struct UpdateView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: UpdateViewModel
     var habit: Habit
+    @State var goToHome: Bool = false
 
 
 
@@ -24,6 +25,15 @@ struct UpdateView: View {
             }
             .onAppear{
                 viewModel.loadHabit(habit: habit)
+            }
+            .navigationDestination(isPresented: $goToHome) {
+                HomeView()
+                    .navigationBarBackButtonHidden()
+                    .environmentObject(AddCustomHabitViewModel())
+                    .environmentObject(HabitBarSettingsViewModel())
+                    .environmentObject(StatusViewModel())
+                    .environmentObject(ProgressViewModel())
+                    .environmentObject(UpdateViewModel())
             }
         }
     }
@@ -46,6 +56,7 @@ struct UpdateView: View {
 
             Button(action: {
                 viewModel.createHabit(habit: habit)
+                goToHome = true
             }) {
                 Text("Save")
                     .foregroundStyle(.white)

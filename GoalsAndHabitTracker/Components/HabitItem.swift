@@ -15,7 +15,7 @@ struct HabitItem: View {
     
     var body: some View {
         
-        if viewModel.barStyle1 {
+        if viewModel.barStyle == .barstyle4 {
             ZStack(alignment: .leading) {
                 GeometryReader { geometry in
                     let width = geometry.size.width
@@ -81,7 +81,7 @@ struct HabitItem: View {
             }
         }
         
-        if viewModel.barStyle2 {
+        if viewModel.barStyle == .barstyle2 {
             ZStack(alignment: .leading) {
                 GeometryReader { geometry in
                     let width = geometry.size.width
@@ -143,7 +143,7 @@ struct HabitItem: View {
             }
         }
         
-        if viewModel.barStyle3{
+        if viewModel.barStyle == .barstyle3 {
             ZStack(alignment: .leading) {
                 GeometryReader { geometry in
                     let width = geometry.size.width
@@ -205,7 +205,7 @@ struct HabitItem: View {
             }
         }
         
-        if viewModel.barStyle4 {
+        if viewModel.barStyle == .barstyle5 {
             ZStack(alignment: .leading) {
                 GeometryReader { geometry in
                     let width = geometry.size.width
@@ -267,7 +267,7 @@ struct HabitItem: View {
             }
         }
         
-        if viewModel.barStyle5 {
+        if viewModel.barStyle == .barstyle6 {
             ZStack(alignment: .leading) {
                 GeometryReader { geometry in
                     let width = geometry.size.width
@@ -333,7 +333,7 @@ struct HabitItem: View {
             }
         }
         
-        if viewModel.barStyle7 {
+        if viewModel.barStyle == .barstyle1 {
             ZStack(alignment: .leading) {
                 
                 HStack {

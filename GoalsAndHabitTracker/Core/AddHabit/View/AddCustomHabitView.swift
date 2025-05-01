@@ -9,6 +9,7 @@ import SwiftUI
 struct AddCustomHabitView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: AddCustomHabitViewModel
+    @State var goToHome: Bool = false
 
 
     var body: some View {
@@ -19,6 +20,15 @@ struct AddCustomHabitView: View {
             }
             .sheet(isPresented: $viewModel.showingColorSheet) {
                 colorPickerSheet
+            }
+            .navigationDestination(isPresented: $goToHome) {
+                HomeView()
+                    .navigationBarBackButtonHidden()
+                    .environmentObject(AddCustomHabitViewModel())
+                    .environmentObject(HabitBarSettingsViewModel())
+                    .environmentObject(StatusViewModel())
+                    .environmentObject(ProgressViewModel())
+                    .environmentObject(UpdateViewModel())
             }
         }
     }
@@ -41,6 +51,7 @@ struct AddCustomHabitView: View {
 
             Button(action: {
                 viewModel.createHabit()
+                goToHome = true
             }) {
                 Text("Save")
                     .foregroundStyle(.white)

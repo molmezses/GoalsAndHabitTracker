@@ -91,7 +91,7 @@ struct HomeView: View {
 
                         }
                     }
-                    .background(viewModel.barStyle7 ? Color(.systemGroupedBackground) : Color.white)
+                    .background(viewModel.barStyle == .barstyle1 ? Color(.systemGroupedBackground) : Color.white)
                 }
 
                 HStack {
@@ -118,6 +118,16 @@ struct HomeView: View {
                 AddHabitView()
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
+            }
+            .task {
+                Task {
+                    
+                    let habitService = HabitService() //Instance
+                    for await habits in habitService.listenHabits() {
+                        await habitService.resetHabitsIfNewDay(habits)
+                    }
+                }
+
             }
            
         }

@@ -7,17 +7,37 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestore
+import Firebase
 
-class HabitBarSettingsViewModel: ObservableObject{
-    
-    @Published var barStyle1: Bool = false
-    @Published var barStyle2: Bool = false
-    @Published var barStyle3: Bool = false
-    @Published var barStyle4: Bool = false
-    @Published var barStyle5: Bool = false
-    @Published var barStyle6: Bool = false
-    @Published var barStyle7: Bool = true
-
-    
-    
+enum habitBarStyle: Int {
+    case barstyle1 = 1
+    case barstyle2 = 2
+    case barstyle3 = 3
+    case barstyle4 = 4
+    case barstyle5 = 5
+    case barstyle6 = 6
 }
+
+class HabitBarSettingsViewModel: ObservableObject {
+    @Published var barStyle: habitBarStyle = .barstyle1 {
+        didSet {
+            FirestoreManager.shared.updateHabitStyle(barStyle.rawValue)
+        }
+    }
+
+    init() {
+        loadBarStyleFromFirestore()
+    }
+
+    private func loadBarStyleFromFirestore() {
+        FirestoreManager.shared.fetchHabitStyle { [weak self] styleValue in
+            DispatchQueue.main.async {
+                if let value = styleValue, let style = habitBarStyle(rawValue: value) {
+                    self?.barStyle = style
+                }
+            }
+        }
+    }
+}
+

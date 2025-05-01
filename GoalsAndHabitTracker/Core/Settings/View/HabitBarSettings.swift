@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct HabitBarSettings: View {
     
     @Environment(\.dismiss) var dismiss
@@ -118,16 +120,10 @@ struct HabitBarSettings: View {
                     
                     
                     Button {
-                        viewModel.barStyle7.toggle()
-                        viewModel.barStyle1 = false
-                        viewModel.barStyle2 = false
-                        viewModel.barStyle3 = false
-                        viewModel.barStyle6 = false
-                        viewModel.barStyle5 = false
-                        viewModel.barStyle4 = false
+                        viewModel.barStyle = .barstyle1
 
                     } label: {
-                        if viewModel.barStyle7 {
+                        if viewModel.barStyle == .barstyle1 {
                             Circle()
                                 .frame(width: 30)
                                 .padding(.trailing)
@@ -216,16 +212,10 @@ struct HabitBarSettings: View {
                     }
                     
                     Button {
-                        viewModel.barStyle2.toggle()
-                        viewModel.barStyle1 = false
-                        viewModel.barStyle7 = false
-                        viewModel.barStyle3 = false
-                        viewModel.barStyle6 = false
-                        viewModel.barStyle5 = false
-                        viewModel.barStyle4 = false
+                        viewModel.barStyle = .barstyle2
 
                     } label: {
-                        if viewModel.barStyle2 {
+                        if viewModel.barStyle == .barstyle2 {
                             Circle()
                                 .frame(width: 30)
                                 .padding(.trailing)
@@ -302,16 +292,10 @@ struct HabitBarSettings: View {
                     }
                     
                     Button {
-                        viewModel.barStyle3.toggle()
-                        viewModel.barStyle1 = false
-                        viewModel.barStyle2 = false
-                        viewModel.barStyle7 = false
-                        viewModel.barStyle6 = false
-                        viewModel.barStyle5 = false
-                        viewModel.barStyle4 = false
+                        viewModel.barStyle = .barstyle3
 
                     } label: {
-                        if viewModel.barStyle3 {
+                        if viewModel.barStyle == .barstyle3 {
                             Circle()
                                 .frame(width: 30)
                                 .padding(.trailing)
@@ -400,16 +384,10 @@ struct HabitBarSettings: View {
                     }
                     
                     Button {
-                        viewModel.barStyle1.toggle()
-                        viewModel.barStyle7 = false
-                        viewModel.barStyle2 = false
-                        viewModel.barStyle3 = false
-                        viewModel.barStyle6 = false
-                        viewModel.barStyle5 = false
-                        viewModel.barStyle4 = false
+                        viewModel.barStyle = .barstyle4
 
                     } label: {
-                        if viewModel.barStyle1 {
+                        if viewModel.barStyle == .barstyle4 {
                             Circle()
                                 .frame(width: 30)
                                 .padding(.trailing)
@@ -485,16 +463,10 @@ struct HabitBarSettings: View {
                     }
                     
                     Button {
-                        viewModel.barStyle4.toggle()
-                        viewModel.barStyle1 = false
-                        viewModel.barStyle2 = false
-                        viewModel.barStyle3 = false
-                        viewModel.barStyle6 = false
-                        viewModel.barStyle5 = false
-                        viewModel.barStyle7 = false
+                        viewModel.barStyle = .barstyle5
 
                     } label: {
-                        if viewModel.barStyle4 {
+                        if viewModel.barStyle == .barstyle5 {
                             Circle()
                                 .frame(width: 30)
                                 .padding(.trailing)
@@ -576,16 +548,10 @@ struct HabitBarSettings: View {
                     }
                     
                     Button {
-                        viewModel.barStyle5.toggle()
-                        viewModel.barStyle1 = false
-                        viewModel.barStyle2 = false
-                        viewModel.barStyle3 = false
-                        viewModel.barStyle6 = false
-                        viewModel.barStyle7 = false
-                        viewModel.barStyle4 = false
+                        viewModel.barStyle = .barstyle6
 
                     } label: {
-                        if viewModel.barStyle5 {
+                        if viewModel.barStyle == .barstyle6 {
                             Circle()
                                 .frame(width: 30)
                                 .padding(.trailing)

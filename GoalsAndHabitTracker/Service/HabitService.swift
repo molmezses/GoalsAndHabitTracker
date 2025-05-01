@@ -56,6 +56,30 @@ class HabitService {
         
     }
     
+    func resetHabitsIfNewDay(_ habits: [Habit]) async {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+
+        for var habit in habits {
+            let lastUpdate = habit.lastUpdated ?? Date.distantPast
+            let lastUpdateDay = calendar.startOfDay(for: lastUpdate)
+
+            // Eğer bugünle aynı değilse (yeni güne geçilmişse)
+            if lastUpdateDay < today {
+                habit.current = 0
+                habit.lastUpdated = Date()
+
+                do {
+                    try await updateHabit(habit)
+                    print("Habit resetlendi: \(habit.title)")
+                } catch {
+                    print("Resetleme hatası: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    
     
 }
 

@@ -42,8 +42,8 @@ struct Habit: Identifiable, Codable {
 
 extension Habit{
     static var MOCK_HABIT: [Habit] = [
-        Habit(title: "asdasd", emoji: "😁", current: 78, total: 100, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "",  complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: ""),
+        Habit(title: "asdasd", emoji: "😁", current: 78, total: 250, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: ""),
         Habit(title: "asdasd", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "",  complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: ""),
-        Habit(title: "123123123", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "",  complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: "")
+        Habit(title: "123123123", emoji: "😁", current: 0, total: 0, colorHex: "324234", isCompleted: true, sound: "sdfsfd", category: "eda", reminderTime: Date(), reminderDays: "", complatedDay: ["29 April 2025" , "12 April 2025"], missing: 0, longestSeries: 0, startingDay: "")
     ]
 }

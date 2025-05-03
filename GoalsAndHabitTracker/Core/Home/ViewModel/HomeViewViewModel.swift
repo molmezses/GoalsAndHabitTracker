@@ -9,5 +9,8 @@ import SwiftUI
 import Foundation
 
 class HomeViewViewModel: ObservableObject {
-    @Published var habits: [Habit] = []
+    
+    
+       
+    
 }

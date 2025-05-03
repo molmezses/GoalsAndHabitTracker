@@ -17,6 +17,7 @@ class UpdateViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var selectedEmoji: String = ""
     @Published var color: Color = .red
+    @Published var reminderMessage = ""
     @Published var showingColorSheet: Bool = false
     @Published var showingEmojiSheet: Bool = false
     @Published var completedDay: [String] = []
@@ -49,7 +50,7 @@ class UpdateViewModel: ObservableObject {
 
     
 
-    func createHabit(habit: Habit) {
+    func createHabit(habit: Habit, soundVM : SoundViewModel) {
         let habit = Habit(
             id: habit.id,
             title: title,
@@ -58,7 +59,7 @@ class UpdateViewModel: ObservableObject {
             total: Double(targetAmount) ?? 100,
             colorHex: color.toHex() ?? "#FF0000",
             isCompleted: false,
-            sound: "",
+            sound: soundVM.soundBar.rawValue,
             category: selectedUnit,
             reminderTime: reminderTime,
             reminderDays: "Everyday",

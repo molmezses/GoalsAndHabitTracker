@@ -80,6 +80,33 @@ class FirestoreManager {
             }
         }
     }
+    
+    func deleteHabit(_ habit: Habit, completion: @escaping (Result<Void, Error>) -> Void) {
+        let db = Firestore.firestore()
+        
+        guard let habitID = habit.id else {
+            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Habit ID bulunamadı."])))
+            return
+        }
+        
+        guard let userID = UserManager.shared.userId else {
+            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User ID bulunamadı."])))
+            return
+        }
+
+        let habitRef = db.collection("users")
+            .document(userID)
+            .collection("habits")
+            .document(habitID)
+        
+        habitRef.delete { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
 
 
 }

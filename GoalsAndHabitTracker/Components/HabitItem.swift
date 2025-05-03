@@ -57,8 +57,8 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: habit.isCompleted ? "checkmark" : "")
-                        .foregroundColor(habit.isCompleted ? habit.color : .gray)
+                    Image(systemName: isComplated() ? "checkmark" : "")
+                        .foregroundColor(isComplated() ? habit.color : .gray)
                         .imageScale(.large)
                         .bold()
                 }
@@ -123,8 +123,8 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: habit.isCompleted ? "checkmark" : "")
-                        .foregroundColor(habit.isCompleted ? habit.color : .gray)
+                    Image(systemName: isComplated() ? "checkmark" : "")
+                        .foregroundColor(isComplated() ? .white : .gray)
                         .imageScale(.large)
                         .bold()
                 }
@@ -185,8 +185,8 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: habit.isCompleted ? "checkmark" : "")
-                        .foregroundColor(habit.isCompleted ? habit.color : .gray)
+                    Image(systemName: isComplated() ? "checkmark" : "")
+                        .foregroundColor(isComplated() ? habit.color : .gray)
                         .imageScale(.large)
                         .bold()
                 }
@@ -247,8 +247,8 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: habit.isCompleted ? "checkmark" : "")
-                        .foregroundColor(habit.isCompleted ? habit.color : .gray)
+                    Image(systemName: isComplated() ? "checkmark" : "")
+                        .foregroundColor(isComplated() ? habit.color : .gray)
                         .imageScale(.large)
                         .bold()
                 }
@@ -309,8 +309,8 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: habit.isCompleted ? "checkmark" : "")
-                        .foregroundColor(habit.isCompleted ? habit.color : .gray)
+                    Image(systemName: isComplated() ? "checkmark" : "")
+                        .foregroundColor(isComplated() ? habit.color : .gray)
                         .imageScale(.large)
                         .bold()
                 }
@@ -367,8 +367,8 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: habit.isCompleted ? "checkmark" : "")
-                        .foregroundColor(habit.isCompleted ? habit.color : .gray)
+                    Image(systemName: isComplated() ? "checkmark" : "")
+                        .foregroundColor(isComplated() ? habit.color : .gray)
                         .imageScale(.large)
                         .bold()
                 }
@@ -390,6 +390,13 @@ struct HabitItem: View {
         
         
         
+    }
+    
+    func isComplated() -> Bool {
+        if habit.current == habit.total {
+            return true
+        }
+        return false
     }
 
 }

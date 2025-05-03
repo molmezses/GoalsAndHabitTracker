@@ -37,6 +37,8 @@ struct GoalsAndHabitTrackerApp: App {
                 .environmentObject(StatusViewModel())
                 .environmentObject(ProgressViewModel())
                 .environmentObject(UpdateViewModel())
+                .environmentObject(SoundViewModel())
+
         }
     }
 }

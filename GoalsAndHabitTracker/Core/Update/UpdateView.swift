@@ -11,6 +11,7 @@ struct UpdateView: View {
     @EnvironmentObject var viewModel: UpdateViewModel
     var habit: Habit
     @State var goToHome: Bool = false
+    @EnvironmentObject var soundVM: SoundViewModel
 
 
 
@@ -34,6 +35,7 @@ struct UpdateView: View {
                     .environmentObject(StatusViewModel())
                     .environmentObject(ProgressViewModel())
                     .environmentObject(UpdateViewModel())
+                    .environmentObject(SoundViewModel())
             }
         }
     }
@@ -55,7 +57,7 @@ struct UpdateView: View {
             Spacer()
 
             Button(action: {
-                viewModel.createHabit(habit: habit)
+                viewModel.createHabit(habit: habit, soundVM: soundVM)
                 goToHome = true
             }) {
                 Text("Save")
@@ -222,10 +224,16 @@ struct UpdateView: View {
 
             Divider()
 
-            settingsRow(title: "Choose a Reminder sound") {
-                Text("🎵")
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.gray)
+            NavigationLink {
+                SelectSoundView()
+                    .navigationBarBackButtonHidden()
+            } label: {
+                settingsRow(title: "Choose a Reminder sound") {
+                    Text("🎵")
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.gray)
+                }
+                .foregroundStyle(.black)
             }
         }
         .padding()
@@ -368,6 +376,8 @@ struct EmojiPickerViewUpdate: View {
 
 #Preview {
     UpdateView(habit: Habit.MOCK_HABIT[0])
+        .environmentObject(UpdateViewModel())
+        .environmentObject(SoundViewModel())
 }
 
 

@@ -9,6 +9,8 @@ import SwiftUI
 struct AddCustomHabitView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: AddCustomHabitViewModel
+    @EnvironmentObject var soundVM: SoundViewModel
+
     @State var goToHome: Bool = false
 
 
@@ -50,7 +52,7 @@ struct AddCustomHabitView: View {
             Spacer()
 
             Button(action: {
-                viewModel.createHabit()
+                viewModel.createHabit(soundVM: soundVM)
                 goToHome = true
             }) {
                 Text("Save")
@@ -205,6 +207,10 @@ struct AddCustomHabitView: View {
                         }
                 }
             }
+            Divider()
+            
+
+            
 
             Divider()
 
@@ -217,11 +223,18 @@ struct AddCustomHabitView: View {
 
             Divider()
 
-            settingsRow(title: "Choose a Reminder sound") {
-                Text("🎵")
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.gray)
+            NavigationLink {
+                SelectSoundView()
+                    .navigationBarBackButtonHidden()
+            } label: {
+                settingsRow(title: "Choose a Reminder sound") {
+                    Text(soundVM.soundBar.rawValue)
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.gray)
+                }
+                .foregroundStyle(.black)
             }
+
         }
         .padding()
         .background(.white)
@@ -368,5 +381,6 @@ struct AddCustomHabitView_Previews: PreviewProvider {
     static var previews: some View {
         AddCustomHabitView()
             .environmentObject(AddCustomHabitViewModel())
+            .environmentObject(SoundViewModel())
     }
 }

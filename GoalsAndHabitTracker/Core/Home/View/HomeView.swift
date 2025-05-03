@@ -82,6 +82,12 @@ struct HomeView: View {
                                         HabitItem(habit: habit)
                                     }
                                     .foregroundColor(.black)
+                                    .onAppear{
+                                        if !habitViewModel.habits.isEmpty{
+                                            habitViewModel.scheduleAllNotifications()
+                                            print("Notification Created")
+                                        }
+                                    }
                                 }
 
 
@@ -93,7 +99,6 @@ struct HomeView: View {
                     }
                     .background(viewModel.barStyle == .barstyle1 ? Color(.systemGroupedBackground) : Color.white)
                 }
-
                 HStack {
                     Spacer()
                     // Add New Habit Button (Floating)

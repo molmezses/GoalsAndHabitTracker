@@ -34,6 +34,7 @@ class AddCustomHabitViewModel: ObservableObject {
         Color(hex: "#FF9500"), // Turuncu
         Color(hex: "#AF52DE")  // Mor
     ]
+    @EnvironmentObject var viewModel: SoundViewModel
 
     
 
@@ -48,7 +49,7 @@ class AddCustomHabitViewModel: ObservableObject {
     }
     
 
-    func createHabit() {
+    func createHabit(soundVM : SoundViewModel) {
         let habit = Habit(
             id: UUID().uuidString,
             title: title,
@@ -57,7 +58,7 @@ class AddCustomHabitViewModel: ObservableObject {
             total: Double(targetAmount) ?? 100,
             colorHex: color.toHex() ?? "#FF0000",
             isCompleted: false,
-            sound: "",
+            sound: soundVM.soundBar.rawValue,
             category: selectedUnit,
             reminderTime: reminderTime,
             reminderDays: "Everyday",
@@ -78,6 +79,28 @@ class AddCustomHabitViewModel: ObservableObject {
         formatter.dateFormat = "d MMMM" // 29 April
         return formatter.string(from: date)
     }
+    
+    func scheduleAllNotifications() {
+        NotificationManager.instance.requestAuthorization()
+        
+        for habit in habits {
+            let calendar = Calendar.current
+            let hour = calendar.component(.hour, from: habit.reminderTime)
+            let minute = calendar.component(.minute, from: habit.reminderTime)
+            let title = habit.title
+            let subtitle = "EŞŞEKKKKKKK "
+            let identifier = habit.id
+            
+            NotificationManager.instance.scheduleNotification(
+                hour: hour,
+                minute: minute,
+                title: title,
+                subtitle: subtitle,
+                identifier: identifier ?? "deneme"
+            )
+        }
+    }
+    
     
     
 }

@@ -13,6 +13,7 @@ struct AddHabitView: View {
     @Environment(\.dismiss) var dismiss
     @State var animate: Bool = false
     
+    
     var body: some View {
         NavigationStack{
             VStack(spacing: 0) {
@@ -78,14 +79,23 @@ struct AddHabitView: View {
                                 .fontDesign(.rounded)
                                 .padding(.bottom , 4)
                             }
+                            
+                            
 
-                            AddHabitButtonBar(title: "Drink Water", color: .blue, icon: "💧")
-                                .opacity(animate ? 1 : 0)
-                                .offset(y: animate ? 0 : 20)
-                                .animation(.easeInOut(duration: 0.4), value: animate)
-                                .onAppear {
-                                    animate = true
-                                }
+
+                            Button {
+                                
+                            } label: {
+                                AddHabitButtonBar(title: "Drink Water", color: .blue, icon: "💧")
+                                    .opacity(animate ? 1 : 0)
+                                    .offset(y: animate ? 0 : 20)
+                                    .animation(.easeInOut(duration: 0.4), value: animate)
+                                    .onAppear {
+                                        animate = true
+                                    }
+                                    .foregroundStyle(.black)
+                            }
+
                             AddHabitButtonBar(title: "Walk", color: .green, icon: "🚶‍♂️")
                                 .opacity(animate ? 1 : 0)
                                 .offset(y: animate ? 0 : 20)

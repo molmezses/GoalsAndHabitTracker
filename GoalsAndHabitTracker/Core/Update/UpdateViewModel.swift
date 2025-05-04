@@ -17,7 +17,7 @@ class UpdateViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var selectedEmoji: String = ""
     @Published var color: Color = .red
-    @Published var reminderMessage = ""
+    @Published var current: Double = 1
     @Published var showingColorSheet: Bool = false
     @Published var showingEmojiSheet: Bool = false
     @Published var completedDay: [String] = []
@@ -25,10 +25,14 @@ class UpdateViewModel: ObservableObject {
     @Published var selectedUnit: String = ""
     @Published var reminderIsOn: Bool = false
     @Published var reminderTime: Date = Date()
+    @Published var reminderMessage: String = ""
     @Published var weekdays: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Published var selectedDays: Set<String> = []
     @Published var animate: Bool = false
+    @Published var missing: Int = 0
+    @Published var longestSeries: Int = 0
     @Published var rapor: Bool = false
+    @Published var startingDay:String = ""
     @Published var colors: [Color] = [
         Color(hex: "#FF3B30"), // Kırmızı
         Color(hex: "#34C759"), // Yeşil
@@ -45,6 +49,10 @@ class UpdateViewModel: ObservableObject {
         selectedUnit = habit.category
         reminderTime = habit.reminderTime
         completedDay = habit.complatedDay
+        current = 90
+        startingDay = habit.startingDay
+        missing = habit.missing
+        longestSeries = habit.longestSeries
         
     }
 
@@ -55,7 +63,7 @@ class UpdateViewModel: ObservableObject {
             id: habit.id,
             title: title,
             emoji: selectedEmoji,
-            current: habit.current,
+            current: 80,
             total: Double(targetAmount) ?? 100,
             colorHex: color.toHex() ?? "#FF0000",
             isCompleted: false,
@@ -63,10 +71,11 @@ class UpdateViewModel: ObservableObject {
             category: selectedUnit,
             reminderTime: reminderTime,
             reminderDays: "Everyday",
+            reminderMessage: reminderMessage,
             complatedDay: habit.complatedDay,
-            missing: 0,
-            longestSeries: 0,
-            startingDay: formattedDayMonth(from: Date())
+            missing: missing,
+            longestSeries: longestSeries,
+            startingDay: startingDay
         )
 
         Task {

@@ -145,7 +145,7 @@ struct UpdateView: View {
                     .frame(width: 60)
                     .background(Color(.systemGray6))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                Text("/day")
+                Text("/\(viewModel.selectedUnit)")
                     .font(.subheadline)
             }
 
@@ -211,6 +211,18 @@ struct UpdateView: View {
                             }
                         }
                 }
+            }
+            
+            Divider()
+            
+            VStack {
+                HStack {
+                    Text("Reminder Message")
+                    Spacer()
+                }
+                Spacer()
+                TextField("Enter a message", text: $viewModel.reminderMessage)
+                
             }
 
             Divider()

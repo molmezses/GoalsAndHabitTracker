@@ -23,6 +23,7 @@ class AddCustomHabitViewModel: ObservableObject {
     @Published var selectedUnit: String = "Adet"
     @Published var reminderIsOn: Bool = false
     @Published var reminderTime: Date = Date()
+    @Published var reminderMessage: String = ""
     @Published var weekdays: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Published var selectedDays: Set<String> = []
     @Published var animate: Bool = false
@@ -62,6 +63,7 @@ class AddCustomHabitViewModel: ObservableObject {
             category: selectedUnit,
             reminderTime: reminderTime,
             reminderDays: "Everyday",
+            reminderMessage: reminderMessage,
             complatedDay: [],
             missing: 0,
             longestSeries: 0,
@@ -88,7 +90,7 @@ class AddCustomHabitViewModel: ObservableObject {
             let hour = calendar.component(.hour, from: habit.reminderTime)
             let minute = calendar.component(.minute, from: habit.reminderTime)
             let title = habit.title
-            let subtitle = "EŞŞEKKKKKKK "
+            let subtitle = habit.reminderMessage
             let identifier = habit.id
             
             NotificationManager.instance.scheduleNotification(

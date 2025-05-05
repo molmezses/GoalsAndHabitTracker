@@ -70,6 +70,7 @@ class UpdateViewModel: ObservableObject {
         targetAmount = ("\(habit.total)")
         selectedUnit = habit.category
         reminderTime = habit.reminderTime
+        reminderMessage = habit.reminderMessage
         completedDay = habit.complatedDay
         current = 90
         startingDay = habit.startingDay

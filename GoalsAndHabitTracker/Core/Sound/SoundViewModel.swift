@@ -10,7 +10,7 @@ import Foundation
 
 class SoundViewModel: ObservableObject {
     
-    @Published var selectedSound = "soujdd"
+    @Published var selectedSound = "Sound 1"
   
     
 }

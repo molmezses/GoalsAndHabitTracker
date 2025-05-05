@@ -25,9 +25,9 @@ class NotificationManager{
         
     }
     
-    func scheduleNotification(hour: Int , minute: Int , title: String , subtitle: String , identifier: String , sound: String){
+    func scheduleNotification(hour: Int , minute: Int , title: String , subtitle: String , identifier: String , sound: String , emoji:String){
         let content = UNMutableNotificationContent()
-        content.title = title
+        content.title = "\(emoji) \(title)"
         content.subtitle = subtitle
         content.badge = 1
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(sound).caf"))

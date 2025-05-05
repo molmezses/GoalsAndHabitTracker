@@ -111,6 +111,98 @@ struct SelectSoundView: View {
                                 .fontDesign(.rounded)
                                 .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
                             }
+                            
+                            Button {
+                                soundVM.selectedSound = "s4"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 4")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            }
+                            
+                            Button {
+                                soundVM.selectedSound = "s5"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 5")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            }
+                            
+                            Button {
+                                soundVM.selectedSound = "s6"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 6")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            }
+                            
+                            Button {
+                                soundVM.selectedSound = "s7"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 7")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            }
+                            
+                            Button {
+                                soundVM.selectedSound = "s8"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 8")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            }
+                            
+                            
+                            
+                    
+                            
+                            
+                            
 
                             
 

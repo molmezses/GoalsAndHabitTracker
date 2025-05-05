@@ -114,6 +114,7 @@ class AddCustomHabitViewModel: ObservableObject {
             let subtitle = habit.reminderMessage
             let identifier = habit.id
             let sound = habit.sound
+            let emoji = habit.emoji
             
             NotificationManager.instance.scheduleNotification(
                 hour: hour,
@@ -121,7 +122,8 @@ class AddCustomHabitViewModel: ObservableObject {
                 title: title,
                 subtitle: subtitle,
                 identifier: identifier ?? "deneme",
-                sound: sound
+                sound: sound,
+                emoji: emoji
             )
         }
     }

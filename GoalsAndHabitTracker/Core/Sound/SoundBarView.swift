@@ -19,7 +19,7 @@ struct SoundBarView: View {
     var body: some View {
         Button {
             onTap()
-            SoundManager.instance.playSound(sound: viewModel.soundBar.rawValue)
+            SoundManager.instance.playSound(sound: "viewModel.soundBar.rawValue")
         } label: {
             HStack {
                 Text(title)

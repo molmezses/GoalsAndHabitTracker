@@ -12,7 +12,7 @@ struct SelectSoundView: View {
     
     @Environment(\.dismiss) var dismiss
     @State var animate: Bool = false
-    @EnvironmentObject var viewModel : SoundViewModel
+    @EnvironmentObject var soundVM : SoundViewModel
 
     
     var body: some View {
@@ -61,44 +61,58 @@ struct SelectSoundView: View {
                     ScrollView {
                         VStack {
                             
-                            SoundBarView(title: "Drink Water", color: .blue, icon: "🎶", isSelected: viewModel.soundBar == .sound1) {
-                                viewModel.soundBar = .sound1
-                            }
-                            .opacity(animate ? 1 : 0)
-                            .offset(y: animate ? 0 : 20)
-                            .animation(.easeInOut(duration: 0.4), value: animate)
-                            .onAppear {
-                                animate = true
-                            }
-                            .onTapGesture {
-                                viewModel.soundBar = .sound1
-                            }
-                            
-                            SoundBarView(title: "Sound 2", color: .green, icon: "🎶", isSelected: viewModel.soundBar == .sound2) {
-                                viewModel.soundBar = .sound2
-                            }
-                            .opacity(animate ? 1 : 0)
-                            .offset(y: animate ? 0 : 20)
-                            .animation(.easeInOut(duration: 0.4), value: animate)
-                            .onAppear {
-                                animate = true
-                            }
-                            .onTapGesture {
-                                viewModel.soundBar = .sound2
+                            Button {
+                                soundVM.selectedSound = "s1"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 1")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
                             }
                             
-                            SoundBarView(title: "Sound 3", color: .green, icon: "🎶", isSelected: viewModel.soundBar == .sound3) {
-                                viewModel.soundBar = .sound3
+                            Button {
+                                soundVM.selectedSound = "s2"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 2")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
                             }
-                            .opacity(animate ? 1 : 0)
-                            .offset(y: animate ? 0 : 20)
-                            .animation(.easeInOut(duration: 0.4), value: animate)
-                            .onAppear {
-                                animate = true
+                            
+                            Button {
+                                soundVM.selectedSound = "s3"
+                                SoundManager.instance.playSound(sound: soundVM.selectedSound)
+                            } label: {
+                                HStack {
+                                    Text("Sound 3")
+                                    Spacer()
+                                }
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .padding(.horizontal)
+                                .fontDesign(.rounded)
+                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
                             }
-                            .onTapGesture {
-                                viewModel.soundBar = .sound3
-                            }
+
+                            
 
                         }//contnt v
                         .padding(.vertical)

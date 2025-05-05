@@ -153,11 +153,30 @@ struct UpdateView: View {
 
             settingsRow(title: "Select a category") {
                 Menu {
-                    Button("Adet") { viewModel.selectedUnit = "Adet" }
-                    Button("Sayfa") { viewModel.selectedUnit = "Sayfa" }
-                    Button("Gün") { viewModel.selectedUnit = "Gün" }
-                    Button("Kalori") { viewModel.selectedUnit = "Kalori" }
-                    Button("Litre") { viewModel.selectedUnit = "Litre" }
+                    Button("Piece") { viewModel.selectedUnit = "Piece" } // Adet
+                        Button("Page") { viewModel.selectedUnit = "Page" }
+                        Button("Day") { viewModel.selectedUnit = "Day" }
+                        Button("Calorie") { viewModel.selectedUnit = "Calorie" }
+                        Button("Liter") { viewModel.selectedUnit = "Liter" }
+                        Button("ml") { viewModel.selectedUnit = "ml" }
+                        Button("km") { viewModel.selectedUnit = "km" }
+                        Button("Step") { viewModel.selectedUnit = "Step" }
+                        Button("Hour") { viewModel.selectedUnit = "Hour" }
+                        Button("Minute") { viewModel.selectedUnit = "Minute" }
+                        Button("Episode") { viewModel.selectedUnit = "Episode" }
+                        Button("Word") { viewModel.selectedUnit = "Word" }
+                        Button("Sentence") { viewModel.selectedUnit = "Sentence" }
+                        Button("Article") { viewModel.selectedUnit = "Article" }
+                        Button("Lesson") { viewModel.selectedUnit = "Lesson" }
+                        Button("Question") { viewModel.selectedUnit = "Question" }
+                        Button("Repeat") { viewModel.selectedUnit = "Repeat" }
+                        Button("Exercise") { viewModel.selectedUnit = "Exercise" }
+                        Button("Breath") { viewModel.selectedUnit = "Breath" }
+                        Button("Distance") { viewModel.selectedUnit = "Distance" }
+                        Button("Time") { viewModel.selectedUnit = "Time" }
+                        Button("Task") { viewModel.selectedUnit = "Task" }
+                        Button("Practice") { viewModel.selectedUnit = "Practice" }
+                        Button("Journal") { viewModel.selectedUnit = "Journal" }
                 } label: {
                     HStack {
                         Text(viewModel.selectedUnit)

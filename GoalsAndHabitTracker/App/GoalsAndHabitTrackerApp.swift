@@ -26,6 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct GoalsAndHabitTrackerApp: App {
     @StateObject private var addCustomHabitVM = AddCustomHabitViewModel()
+    @StateObject var soundVM = SoundViewModel()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
@@ -37,7 +38,7 @@ struct GoalsAndHabitTrackerApp: App {
                 .environmentObject(StatusViewModel())
                 .environmentObject(ProgressViewModel())
                 .environmentObject(UpdateViewModel())
-                .environmentObject(SoundViewModel())
+                .environmentObject(soundVM)
 
         }
     }

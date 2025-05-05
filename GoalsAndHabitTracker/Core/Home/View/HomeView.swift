@@ -12,6 +12,9 @@ struct HomeView: View {
     @State var animate: Bool = false
     @EnvironmentObject var viewModel: HabitBarSettingsViewModel
     @EnvironmentObject var habitViewModel: AddCustomHabitViewModel
+    @EnvironmentObject var soundVM: SoundViewModel
+    @EnvironmentObject var progressVM: ProgressViewModel
+
 
 
     
@@ -120,7 +123,7 @@ struct HomeView: View {
                 }
             }
             .fullScreenCover(isPresented: $showAddView) {
-                AddHabitView()
+                AddHabitView(soundVM: _soundVM)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
             }
@@ -151,6 +154,8 @@ struct HomeView: View {
     HomeView()
         .environmentObject(HabitBarSettingsViewModel())
         .environmentObject(AddCustomHabitViewModel())
+        .environmentObject(SoundViewModel())
+        .environmentObject(ProgressViewModel())
     
 }
 

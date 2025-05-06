@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import MessageUI
 import UIKit
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @State var animate: Bool = false
+    @State private var isShowingMailView = false
+    @State private var mailErrorAlert = false
+
 
 
     
@@ -208,7 +212,25 @@ struct SettingsView: View {
                             .foregroundStyle(.black)
 
                             ButtonBar(title: "Request a feature", color: .pink, icon: "questionmark.bubble.fill")
-                            ButtonBar(title: "Contact Support", color: .indigo, icon: "envelope.fill")
+                            Button(action: {
+                                if MFMailComposeViewController.canSendMail() {
+                                    isShowingMailView = true
+                                } else {
+                                    mailErrorAlert = true
+                                }
+                            }) {
+                                ButtonBar(title: "Contact Support", color: .indigo, icon: "envelope.fill")
+                            }
+                            .foregroundStyle(.black)
+                            .sheet(isPresented: $isShowingMailView) {
+                                MailView(recipient: "mustafaolmezses@gmail.com")
+                            }
+                            .alert("Mail app not configured", isPresented: $mailErrorAlert) {
+                                Button("OK", role: .cancel) {}
+                            } message: {
+                                Text("Please set up a mail account in order to send email.")
+                            }
+
                             ButtonBar(title: "FAQ", color: .orange, icon: "text.page.badge.magnifyingglass")
                             Spacer()
                             
@@ -244,6 +266,8 @@ struct SettingsView: View {
         }
     }
 }
+
+
 
 #Preview {
     SettingsView()

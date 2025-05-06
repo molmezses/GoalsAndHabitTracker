@@ -68,14 +68,12 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 1")
                                     Spacer()
+                                    if soundVM.selectedSound == "Sound 1" || soundVM.selectedSound == "s1"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
+
                             }
                             
                             Button {
@@ -85,14 +83,12 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 2")
                                     Spacer()
+                                    if soundVM.selectedSound == "s2"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
+
                             }
                             
                             Button {
@@ -102,14 +98,12 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 3")
                                     Spacer()
+                                    if soundVM.selectedSound == "s3"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
+
                             }
                             
                             Button {
@@ -119,14 +113,11 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 4")
                                     Spacer()
+                                    if soundVM.selectedSound == "s4"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
                             }
                             
                             Button {
@@ -136,14 +127,11 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 5")
                                     Spacer()
+                                    if soundVM.selectedSound == "s5"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
                             }
                             
                             Button {
@@ -153,14 +141,12 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 6")
                                     Spacer()
+                                    if soundVM.selectedSound == "s6"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
+
                             }
                             
                             Button {
@@ -170,14 +156,11 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 7")
                                     Spacer()
+                                    if soundVM.selectedSound == "s7"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
                             }
                             
                             Button {
@@ -187,14 +170,12 @@ struct SelectSoundView: View {
                                 HStack {
                                     Text("Sound 8")
                                     Spacer()
+                                    if soundVM.selectedSound == "s8"{
+                                        Image(systemName: "checkmark")
+                                    }
                                 }
-                                .foregroundColor(.black)
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                                .modifier(SelectSoundModifier())
+                                
                             }
                             
                             
@@ -219,6 +200,19 @@ struct SelectSoundView: View {
                 }
             }
         }
+    }
+}
+
+struct SelectSoundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.black)
+            .padding(12)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .padding(.horizontal)
+            .fontDesign(.rounded)
+            .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
     }
 }
 

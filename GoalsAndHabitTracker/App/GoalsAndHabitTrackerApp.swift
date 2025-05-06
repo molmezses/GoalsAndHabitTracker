@@ -16,7 +16,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         
         // Firebase yapılandırmasından sonra Firestore işlemleri başlatılabilir
-        FirestoreManager.shared.setupUserSettings()
+        FirestoreManager.sharedFirestoreManager.setupUserSettings()
         
         return true
     }

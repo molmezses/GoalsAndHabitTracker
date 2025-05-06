@@ -10,9 +10,8 @@ import Firebase
 import FirebaseFirestore
 
 class FirestoreManager {
-    static let shared = FirestoreManager()
+    static let sharedFirestoreManager = FirestoreManager()
     private init() {}
-
     private let db = Firestore.firestore()
 
     func setupUserSettings() {
@@ -89,6 +88,8 @@ class FirestoreManager {
             return
         }
         
+        
+        
         guard let userID = UserManager.shared.userId else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User ID bulunamadı."])))
             return
@@ -106,6 +107,9 @@ class FirestoreManager {
                 completion(.success(()))
             }
         }
+        
+        NotificationManager.instance.removeNotification(identifier: habitID)
+
     }
 
 

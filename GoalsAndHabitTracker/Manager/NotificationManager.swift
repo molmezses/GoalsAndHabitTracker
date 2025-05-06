@@ -41,6 +41,12 @@ class NotificationManager{
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
     }
+    
+    func removeNotification(identifier: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        print("Notification with identifier '\(identifier)' removed.")
+    }
+
 
     
 

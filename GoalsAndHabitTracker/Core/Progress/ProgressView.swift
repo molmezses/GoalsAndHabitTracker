@@ -16,6 +16,8 @@ struct ProgressView: View {
     @State var habit: Habit
     var updateHabit: (Habit) -> Void
     @EnvironmentObject var viewModel: ProgressViewModel
+    @State var goToHome: Bool = false
+    
 
     var body: some View {
         ZStack {
@@ -191,6 +193,15 @@ struct ProgressView: View {
                     
                     Spacer()
                 }
+                .navigationDestination(isPresented: $goToHome) {
+                    HomeView()
+                        .navigationBarBackButtonHidden()
+                        .environmentObject(AddCustomHabitViewModel())
+                        .environmentObject(HabitBarSettingsViewModel())
+                        .environmentObject(StatusViewModel())
+                        .environmentObject(ProgressViewModel())
+                        .environmentObject(UpdateViewModel())
+                }
             }
 
             // Overlay popup menu
@@ -202,12 +213,12 @@ struct ProgressView: View {
                     }
 
                 VStack {
-                    Spacer().frame(height: UIScreen.main.bounds.height * 0.07) // Menü konumu ayarlanabilir
+                    Spacer().frame(height: UIScreen.main.bounds.height * 0.07)
                     HStack {
                         Spacer()
                         VStack(spacing: 0) {
                             Button(action: {
-                                FirestoreManager.shared.deleteHabit(habit) { result in
+                                FirestoreManager.sharedFirestoreManager.deleteHabit(habit) { result in
                                     switch result{
                                     case .success:
                                         print("Habit silindi")
@@ -216,6 +227,7 @@ struct ProgressView: View {
                                     }
                                 }
                                 showPopupMenu = false
+                                goToHome = true
                             }, label: {
                                 HStack {
                                     Image(systemName: "trash")

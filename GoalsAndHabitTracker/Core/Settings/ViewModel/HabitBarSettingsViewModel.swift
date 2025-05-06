@@ -22,7 +22,7 @@ enum habitBarStyle: Int {
 class HabitBarSettingsViewModel: ObservableObject {
     @Published var barStyle: habitBarStyle = .barstyle1 {
         didSet {
-            FirestoreManager.shared.updateHabitStyle(barStyle.rawValue)
+            FirestoreManager.sharedFirestoreManager.updateHabitStyle(barStyle.rawValue)
         }
     }
 
@@ -31,7 +31,7 @@ class HabitBarSettingsViewModel: ObservableObject {
     }
 
     private func loadBarStyleFromFirestore() {
-        FirestoreManager.shared.fetchHabitStyle { [weak self] styleValue in
+        FirestoreManager.sharedFirestoreManager.fetchHabitStyle { [weak self] styleValue in
             DispatchQueue.main.async {
                 if let value = styleValue, let style = habitBarStyle(rawValue: value) {
                     self?.barStyle = style

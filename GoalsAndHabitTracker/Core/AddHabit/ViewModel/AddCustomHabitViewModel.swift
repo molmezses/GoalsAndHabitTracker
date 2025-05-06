@@ -55,10 +55,7 @@ class AddCustomHabitViewModel: ObservableObject {
         Color(hex: "#00CED1"), Color(hex: "#00B5B3"), Color(hex: "#009C9F"), Color(hex: "#008388"), Color(hex: "#006E73"), // Denizin mavisi tonları
         Color(hex: "#D3D3D3"), Color(hex: "#B0B0B0"), Color(hex: "#A0A0A0"), Color(hex: "#808080"), Color(hex: "#707070") // Gri tonları
     ]
-
-
-    
-    
+    @Published var erorMessage = ""
 
     init() {
         Task {
@@ -70,7 +67,13 @@ class AddCustomHabitViewModel: ObservableObject {
         }
     }
     
-
+    func validateInput(title: String, reminderMessage: String) -> Bool {
+        guard !title.isEmpty && !reminderMessage.isEmpty else {
+            return false
+        }
+        return true
+    }
+    
     func createHabit(soundVM : SoundViewModel) {
         let habit = Habit(
             id: UUID().uuidString,
@@ -90,6 +93,8 @@ class AddCustomHabitViewModel: ObservableObject {
             longestSeries: 0,
             startingDay: formattedDayMonth(from: Date())
         )
+        
+        guard validateInput(title: title, reminderMessage: reminderMessage) else {return}
 
         Task {
             try await habitService.addHabit(habit)
@@ -128,6 +133,7 @@ class AddCustomHabitViewModel: ObservableObject {
         }
     }
     
+ 
     
     
 }

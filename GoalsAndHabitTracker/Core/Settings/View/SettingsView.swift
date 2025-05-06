@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
+    @State var animate: Bool = false
+
 
     
     var body: some View {
@@ -98,8 +101,90 @@ struct SettingsView: View {
                                 .frame(maxWidth: .infinity , alignment: .leading)
                                 .padding(.leading)
                                 .padding(.vertical , 4)
-                            ButtonBar(title: "Language", color: .yellow, icon: "textformat")
-                            ButtonBar(title: "Dark Mode", color: .purple, icon: "moon.circle")
+                            
+                            
+                            HStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundStyle(.orange)
+                                    .overlay {
+                                        Image(systemName: "textformat")
+                                            .foregroundStyle(.white)
+                                    }
+                                
+                                Text("Language")
+                                Spacer()
+                                Menu {
+                                    Button("English"){}
+                                } label: {
+                                    HStack {
+                                        Text("English")
+                                            .foregroundColor(.primary)
+                                        Image(systemName: "chevron.down")
+                                            .foregroundColor(.gray)
+                                    }
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 6)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+
+                            }
+                            .padding(12)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding(.horizontal)
+                            .fontDesign(.rounded)
+                            .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            .opacity(animate ? 1 : 0)
+                            .offset(y: animate ? 0 : 20)
+                            .animation(.easeInOut(duration: 0.6), value: animate)
+                            .onAppear{
+                                animate = true
+                            }
+                            
+                            
+                            HStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .frame(width: 32, height: 32)
+                                    .foregroundStyle(.orange)
+                                    .overlay {
+                                        Image(systemName: "moon.circle")
+                                            .foregroundStyle(.white)
+                                    }
+                                
+                                Text("Dark Mode")
+                                Spacer()
+                                Menu {
+                                    Button("Light"){}
+                                } label: {
+                                    HStack {
+                                        Text("Light")
+                                            .foregroundColor(.primary)
+                                        Image(systemName: "chevron.down")
+                                            .foregroundColor(.gray)
+                                    }
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 6)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+
+                            }
+                            .padding(12)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding(.horizontal)
+                            .fontDesign(.rounded)
+                            .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
+                            .opacity(animate ? 1 : 0)
+                            .offset(y: animate ? 0 : 20)
+                            .animation(.easeInOut(duration: 0.6), value: animate)
+                            .onAppear{
+                                animate = true
+                            }
+                            
+                            
                             NavigationLink {
                                 HabitBarSettings()
                                     .navigationBarBackButtonHidden()
@@ -115,7 +200,13 @@ struct SettingsView: View {
                                 .padding(.leading)
                                 .padding(.vertical , 4)
                             ButtonBar(title: "Give us a happy 5 star!", color: .yellow, icon: "star.fill")
-                            ButtonBar(title: "Invite firends", color: .blue, icon: "person.2.fill")
+                            Button(action: {
+                                shareApp()
+                            }) {
+                                ButtonBar(title: "Invite friends", color: .blue, icon: "person.2.fill")
+                            }
+                            .foregroundStyle(.black)
+
                             ButtonBar(title: "Request a feature", color: .pink, icon: "questionmark.bubble.fill")
                             ButtonBar(title: "Contact Support", color: .indigo, icon: "envelope.fill")
                             ButtonBar(title: "FAQ", color: .orange, icon: "text.page.badge.magnifyingglass")
@@ -136,6 +227,20 @@ struct SettingsView: View {
                     }
                 }
             }
+        }
+    }
+    
+    func shareApp() {
+        let message = """
+        I’m using this awesome app to plan my goals and track my daily habits. It’s really helping me stay focused and consistent. You should give it a try too!
+
+        📱 Habit Tracker
+        """
+        let activityVC = UIActivityViewController(activityItems: [message], applicationActivities: nil)
+        
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let root = scene.windows.first?.rootViewController {
+            root.present(activityVC, animated: true)
         }
     }
 }

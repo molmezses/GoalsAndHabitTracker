@@ -4,18 +4,27 @@
 //
 //  Created by Mustafa Ölmezses on 22.04.2025.
 //
+
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 struct ProfileView: View {
     @Environment(\.dismiss) var dismiss
-    @State var name: String = ""
+    @State private var showLogin = false
+    @State private var showRegister = false
+    @State private var showForgotPassword = false
     @State private var animate = false
+    @State private var name: String = UserDefaults.standard.string(forKey: "userName") ?? ""
+    @StateObject private var viewModel = ProfileViewModel()
+    @State private var showImagePicker = false
+    @State private var profileImage: UIImage? = nil
 
-    
+
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                
                 HStack {
                     Button {
                         dismiss()
@@ -26,44 +35,34 @@ struct ProfileView: View {
                             .padding(8)
                             .background(Color.white)
                             .clipShape(Circle())
+
                     }
 
                     Spacer()
-                    
-                    Text("Account")
+                    Text("Profile")
                         .font(.headline)
                         .fontWeight(.bold)
-                    
                     Spacer()
                     
-                    Button {
-                        // settings or edit action
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .rotationEffect(.degrees(90))
-                            .font(.title3)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                    }
+                    // kaldırıldı: ayarlar butonu
                 }
                 .padding()
                 .background(Color.white)
-                
-                // Scrollable Content
+
                 ZStack {
                     Color(.systemGroupedBackground).ignoresSafeArea()
                     
                     ScrollView {
-                        VStack(spacing: 20) {
-                            
-                            // Profile Image
-                            Image("logo")
+                        VStack(spacing: 24) {
+                            Image(uiImage: viewModel.profileImage ?? UIImage(named: "logo")!)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
+                                .padding(.top)
+                                .onTapGesture {
+                                    showImagePicker = true
+                                }
                                 .overlay(alignment: .bottomTrailing) {
                                     Image(systemName: "plus")
                                         .padding(8)
@@ -72,7 +71,7 @@ struct ProfileView: View {
                                         .foregroundStyle(.white)
                                 }
                             
-                            // Name Field
+                            
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Name")
                                     .fontDesign(.rounded)
@@ -82,6 +81,10 @@ struct ProfileView: View {
                                     .padding()
                                     .background(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .onChange(of: name) {old, newValue in
+                                        UserDefaults.standard.set(newValue, forKey: "userName")
+                                    }
+
                                 
                                 HStack {
                                     Spacer()
@@ -92,72 +95,52 @@ struct ProfileView: View {
                             }
                             .padding(.horizontal)
                             
-                            // Actions
-                            VStack(spacing: 12) {
-                                profileRow(icon: "person.fill", color: .mint, title: "Login your account")
-                                profileRow(icon: "envelope.fill", color: .orange, title: "Register")
-                                profileRow(icon: "key.horizontal.fill", color: .pink, title: "Forget password ?")
-                            }
-                            
-                            // Premium Section
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Premium")
-                                    .fontDesign(.rounded)
-                                    .foregroundStyle(.black)
+//                            VStack(alignment: .leading, spacing: 12) {
+//                                Text("Account")
+//                                    .font(.headline)
+//                                    .padding(.leading)
+//
+//                                NavigationLink(destination: EmptyView()) {
+//                                    profileRow(icon: "person.fill", color: .mint, title: "Log In", isNavLink: true)
+//                                }
+//
+//                                NavigationLink(destination: EmptyView()) {
+//                                    profileRow(icon: "envelope.fill", color: .orange, title: "Register", isNavLink: true)
+//                                }
+//
+//                                NavigationLink(destination: EmptyView()) {
+//                                    profileRow(icon: "key.horizontal.fill", color: .pink, title: "Forgot Password?", isNavLink: true)
+//                                }
+//                                
+//                            }
+//                            .foregroundStyle(.black)
 
-                                    .padding(.leading)
-                                
-                                HStack {
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .frame(width: 32, height: 32)
-                                        .foregroundStyle(.green)
-                                        .overlay {
-                                            Image(systemName: "star.fill")
-                                                .foregroundStyle(.white)
-                                        }
-                                    
-                                    Text("Upgrade to Premium")
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundStyle(.gray)
-                                }
-                                .padding(12)
-                                .background(.green.opacity(0.4))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                
-                            }
+
                             VStack(alignment: .leading, spacing: 12) {
-                                Text("Log out")
-                                    .fontDesign(.rounded)
-                                    .foregroundStyle(.black)
-                                    .foregroundStyle(.black)
+                                Text("App Info")
+                                    .font(.headline)
                                     .padding(.leading)
-                                
-                                HStack {
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .frame(width: 32, height: 32)
-                                        .foregroundStyle(.red)
-                                        .overlay {
-                                            Image(systemName: "chevron.right")
-                                                .foregroundStyle(.white)
-                                        }
-                                    
-                                    Text("Log out")
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundStyle(.gray)
-                                }
-                                .padding(12)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .padding(.horizontal)
-                                .fontDesign(.rounded)
-                                
+
+                                profileRow(icon: "info.circle.fill", color: .blue, title: "App Version: 1.0.0", isNavLink: false)
+                                profileRow(icon: "doc.plaintext.fill", color: .gray, title: "Terms and Conditions" ,isNavLink: false)
+                            }
+
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Clear All Data")
+                                    .font(.headline)
+                                    .padding(.leading)
+
+                                profileRow(icon: "trash.fill", color: .red, title: "Reset All Habits", isNavLink: false)
                             }
                         }
-                        .padding(.top)
+                        .padding(.bottom)
+                    }
+                }
+            }
+            .sheet(isPresented: $showImagePicker) {
+                ImagePicker { image in
+                    if let selected = image {
+                        viewModel.saveProfileImage(selected)
                     }
                 }
             }
@@ -169,9 +152,8 @@ struct ProfileView: View {
             }
         }
     }
-    
-    // Reusable row
-    func profileRow(icon: String, color: Color, title: String) -> some View {
+
+    func profileRow(icon: String, color: Color, title: String , isNavLink : Bool) -> some View {
         HStack {
             RoundedRectangle(cornerRadius: 8)
                 .frame(width: 32, height: 32)
@@ -183,8 +165,9 @@ struct ProfileView: View {
             
             Text(title)
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.gray)
+            if isNavLink{
+                Image(systemName: "chevron.right")
+            }
         }
         .padding(12)
         .background(.white)
@@ -192,12 +175,13 @@ struct ProfileView: View {
         .padding(.horizontal)
         .fontDesign(.rounded)
         .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
-
     }
 }
 
+
 #Preview {
     ProfileView()
+    
 }
 
 

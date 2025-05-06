@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 import FirebaseFirestore
 import Firebase
+import UIKit
+
 
 enum habitBarStyle: Int {
     case barstyle1 = 1
@@ -39,5 +41,8 @@ class HabitBarSettingsViewModel: ObservableObject {
             }
         }
     }
+    
+
+
 }
 

@@ -10,7 +10,7 @@ struct AddCustomHabitView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: AddCustomHabitViewModel
     @EnvironmentObject var soundVM: SoundViewModel
-
+    @FocusState var focusState: Bool
     @State var goToHome: Bool = false
 
 
@@ -22,6 +22,9 @@ struct AddCustomHabitView: View {
             }
             .sheet(isPresented: $viewModel.showingColorSheet) {
                 colorPickerSheet
+            }
+            .onTapGesture {
+                focusState = false
             }
             .navigationDestination(isPresented: $goToHome) {
                 HomeView()
@@ -100,6 +103,7 @@ struct AddCustomHabitView: View {
 
                 TextField("Habit name", text: $viewModel.title)
                     .font(.headline)
+                    .focused($focusState)
 
                 Spacer()
             }
@@ -202,6 +206,9 @@ struct AddCustomHabitView: View {
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
+        .onTapGesture {
+            focusState = false
+        }
     }
 
     private var reminderSettingsSection: some View {
@@ -237,6 +244,7 @@ struct AddCustomHabitView: View {
                 }
                 Spacer()
                 TextField("Enter a message", text: $viewModel.reminderMessage)
+                    .focused($focusState)
                 
             }
             

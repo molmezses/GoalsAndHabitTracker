@@ -211,7 +211,13 @@ struct SettingsView: View {
                             }
                             .foregroundStyle(.black)
 
-                            ButtonBar(title: "Request a feature", color: .pink, icon: "questionmark.bubble.fill")
+                            NavigationLink {
+                                FeedbackView()
+                            } label: {
+                                ButtonBar(title: "Request a feature", color: .pink, icon: "questionmark.bubble.fill")
+                            }
+                            .foregroundStyle(.black)
+
                             Button(action: {
                                 if MFMailComposeViewController.canSendMail() {
                                     isShowingMailView = true

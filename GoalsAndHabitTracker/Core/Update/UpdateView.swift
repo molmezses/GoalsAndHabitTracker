@@ -12,6 +12,8 @@ struct UpdateView: View {
     var habit: Habit
     @State var goToHome: Bool = false
     @EnvironmentObject var soundVM: SoundViewModel
+    @FocusState var focusState: Bool
+
 
 
 
@@ -23,6 +25,9 @@ struct UpdateView: View {
             }
             .sheet(isPresented: $viewModel.showingColorSheet) {
                 colorPickerSheet
+            }
+            .onTapGesture {
+                focusState = false
             }
             .onAppear{
                 viewModel.loadHabit(habit: habit)
@@ -103,6 +108,7 @@ struct UpdateView: View {
 
                 TextField("Habit name", text: $viewModel.title)
                     .font(.headline)
+                    .focused($focusState)
 
                 Spacer()
             }
@@ -241,6 +247,7 @@ struct UpdateView: View {
                 }
                 Spacer()
                 TextField("Enter a message", text: $viewModel.reminderMessage)
+                    .focused($focusState)
                 
             }
 

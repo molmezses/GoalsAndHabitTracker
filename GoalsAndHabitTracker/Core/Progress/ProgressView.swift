@@ -41,6 +41,7 @@ struct ProgressView: View {
                         Text(habit.title)
                             .font(.headline)
                             .fontWeight(.bold)
+                            .lineLimit(1)
                         
                         Spacer()
                         

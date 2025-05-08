@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Privacy - Photo Library Usage Description
+Privacy - Photo Library Usage Description
+Privacy - Photo Library Usage Description</key>
+	<string>We need access to your photo library to let you choose pictures.</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key></key>
+		<string></string>
+		<key>Launch</key>
+		<string></string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
+		<key>UILaunchScreen</key>
+		<dict/>
+	</dict>
+</dict>
+</plist>

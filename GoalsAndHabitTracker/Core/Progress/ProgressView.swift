@@ -65,7 +65,7 @@ struct ProgressView: View {
                         
                         Circle()
                             .trim(from: 0, to: Double(habit.current / habit.total))
-                            .stroke(habit.color ,style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                            .stroke(habit.color ,style: StrokeStyle(lineWidth: 24, lineCap: .round))
                             .rotationEffect(.degrees(-90))
                             .animation(.easeInOut, value: habit.current)
                         

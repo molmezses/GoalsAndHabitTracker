@@ -64,25 +64,6 @@ struct SettingsView: View {
                     
                     ScrollView {
                         VStack {
-                            HStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .frame(width: 32, height: 32)
-                                    .foregroundStyle(.green)
-                                    .overlay {
-                                        Image(systemName: "star.fill")
-                                            .foregroundStyle(.white)
-                                    }
-                                
-                                Text("Upgrade to Premium")
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(.gray)
-                            }
-                            .padding(12)
-                            .background(.green.opacity(0.1))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .padding(.horizontal)
-                            .fontDesign(.rounded)
                             
                             Text("Account")
                                 .font(.caption)
@@ -237,10 +218,10 @@ struct SettingsView: View {
                                 Text("Please set up a mail account in order to send email.")
                             }
 
-                            ButtonBar(title: "FAQ", color: .orange, icon: "text.page.badge.magnifyingglass")
+                            
                             Spacer()
                             
-                            Text("Habit Tracker v1.0.0")
+                            Text("Habit Tracker v1.2.0")
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                                 .padding(.vertical ,6)

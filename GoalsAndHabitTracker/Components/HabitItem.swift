@@ -123,10 +123,12 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: isComplated() ? "checkmark" : "")
-                        .foregroundColor(isComplated() ? .white : .gray)
-                        .imageScale(.large)
-                        .bold()
+                    if isComplated(){
+                        Image(systemName:"checkmark")
+                            .foregroundColor(isComplated() ? .white : .gray)
+                            .imageScale(.large)
+                            .bold()
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -185,10 +187,12 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: isComplated() ? "checkmark" : "")
-                        .foregroundColor(isComplated() ? habit.color : .gray)
-                        .imageScale(.large)
-                        .bold()
+                    if isComplated(){
+                        Image(systemName:"checkmark")
+                            .foregroundColor(isComplated() ? habit.color : .gray)
+                            .imageScale(.large)
+                            .bold()
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -247,10 +251,12 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: isComplated() ? "checkmark" : "")
-                        .foregroundColor(isComplated() ? habit.color : .gray)
-                        .imageScale(.large)
-                        .bold()
+                    if isComplated(){
+                        Image(systemName:"checkmark")
+                            .foregroundColor(isComplated() ? habit.color : .gray)
+                            .imageScale(.large)
+                            .bold()
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -309,10 +315,12 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: isComplated() ? "checkmark" : "")
-                        .foregroundColor(isComplated() ? habit.color : .gray)
-                        .imageScale(.large)
-                        .bold()
+                    if isComplated(){
+                        Image(systemName:"checkmark")
+                            .foregroundColor(isComplated() ? habit.color : .gray)
+                            .imageScale(.large)
+                            .bold()
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -367,10 +375,12 @@ struct HabitItem: View {
                     
                     Spacer()
                     
-                    Image(systemName: isComplated() ? "checkmark" : "")
-                        .foregroundColor(isComplated() ? habit.color : .gray)
-                        .imageScale(.large)
-                        .bold()
+                    if isComplated(){
+                        Image(systemName:"checkmark")
+                            .foregroundColor(isComplated() ? habit.color : .gray)
+                            .imageScale(.large)
+                            .bold()
+                    }
                 }
                 .padding(.horizontal)
             }

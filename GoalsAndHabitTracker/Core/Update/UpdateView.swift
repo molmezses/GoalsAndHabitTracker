@@ -151,6 +151,7 @@ struct UpdateView: View {
                     .frame(width: 60)
                     .background(Color(.systemGray6))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .focused($focusState)
                 Text("/\(viewModel.selectedUnit)")
                     .font(.subheadline)
             }
@@ -284,20 +285,6 @@ struct UpdateView: View {
         VStack(alignment: .leading, spacing: 16) {
             Toggle("Show monthly report", isOn: $viewModel.rapor)
                 .toggleStyle(SwitchToggleStyle(tint: viewModel.color))
-
-            Divider()
-
-            settingsRow(title: "Tap here to view premium advantages.") {
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.gray)
-            }
-
-            Divider()
-
-            settingsRow(title: "Upgrade to Premium") {
-                Text("👑")
-                    .foregroundStyle(.yellow)
-            }
         }
         .padding()
         .background(.white)

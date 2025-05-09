@@ -81,7 +81,7 @@ struct ProfileView: View {
                                     .padding()
                                     .background(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .onChange(of: name) {old, newValue in
+                                    .onChange(of: name) {newValue in
                                         UserDefaults.standard.set(newValue, forKey: "userName")
                                     }
 

@@ -67,8 +67,8 @@ class AddCustomHabitViewModel: ObservableObject {
         }
     }
     
-    func validateInput(title: String, reminderMessage: String) -> Bool {
-        guard !title.isEmpty && !reminderMessage.isEmpty else {
+    func validateInput(title: String) -> Bool {
+        guard !title.isEmpty else {
             return false
         }
         return true
@@ -94,7 +94,7 @@ class AddCustomHabitViewModel: ObservableObject {
             startingDay: formattedDayMonth(from: Date())
         )
         
-        guard validateInput(title: title, reminderMessage: reminderMessage) else {return}
+        guard validateInput(title: title) else {return}
 
         Task {
             try await habitService.addHabit(habit)

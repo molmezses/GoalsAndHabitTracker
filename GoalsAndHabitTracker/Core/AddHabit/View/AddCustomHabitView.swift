@@ -65,8 +65,8 @@ struct AddCustomHabitView: View {
                     .background(viewModel.color)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            .opacity(viewModel.validateInput(title: viewModel.title, reminderMessage: viewModel.reminderMessage) ? 1 : 0.4)
-            .disabled(!viewModel.validateInput(title: viewModel.title, reminderMessage: viewModel.reminderMessage))
+            .opacity(viewModel.validateInput(title: viewModel.title) ? 1 : 0.4)
+            .disabled(!viewModel.validateInput(title: viewModel.title))
         }
         .padding()
         .background(viewModel.color.opacity(0.2))

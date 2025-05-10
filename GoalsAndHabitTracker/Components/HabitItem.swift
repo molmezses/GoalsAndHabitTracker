@@ -43,7 +43,7 @@ struct HabitItem: View {
                             Text("|")
                             Image(systemName: "clock")
                                 .font(.footnote)
-                            Text("\(habit.reminderTime)")
+                            Text("\(formatHour(from: habit.reminderTime))")
                                 .font(.footnote)
                             Spacer()
 
@@ -109,7 +109,7 @@ struct HabitItem: View {
                             Text("|")
                             Image(systemName: "clock")
                                 .font(.footnote)
-                            Text("\(habit.reminderTime)")
+                            Text("\(formatHour(from: habit.reminderTime))")
                                 .font(.footnote)
                             Spacer()
 
@@ -173,7 +173,7 @@ struct HabitItem: View {
                             Text("|")
                             Image(systemName: "clock")
                                 .font(.footnote)
-                            Text("\(habit.reminderTime)")
+                            Text("\(formatHour(from: habit.reminderTime))")
                                 .font(.footnote)
                             Spacer()
 
@@ -237,7 +237,7 @@ struct HabitItem: View {
                             Text("|")
                             Image(systemName: "clock")
                                 .font(.footnote)
-                            Text("\(habit.reminderTime)")
+                            Text("\(formatHour(from: habit.reminderTime))")
                                 .font(.footnote)
                             Spacer()
 
@@ -301,7 +301,7 @@ struct HabitItem: View {
                             Text("|")
                             Image(systemName: "clock")
                                 .font(.footnote)
-                            Text("\(habit.reminderTime)")
+                            Text("\(formatHour(from: habit.reminderTime))")
                                 .font(.footnote)
                             Spacer()
 
@@ -361,7 +361,7 @@ struct HabitItem: View {
                             Text("|")
                             Image(systemName: "clock")
                                 .font(.footnote)
-                            Text("\(habit.reminderTime)")
+                            Text("\(formatHour(from: habit.reminderTime))")
                                 .font(.footnote)
                             Spacer()
 
@@ -408,6 +408,13 @@ struct HabitItem: View {
         }
         return false
     }
+    
+    func formatHour(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: date)
+    }
+    
 
 }
 

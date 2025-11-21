@@ -72,7 +72,7 @@ class UpdateViewModel: ObservableObject {
         reminderTime = habit.reminderTime
         reminderMessage = habit.reminderMessage
         completedDay = habit.complatedDay
-        current = 90
+        current = habit.current
         startingDay = habit.startingDay
         missing = habit.missing
         longestSeries = habit.longestSeries
@@ -87,7 +87,7 @@ class UpdateViewModel: ObservableObject {
             id: habit.id,
             title: title,
             emoji: selectedEmoji,
-            current: 80,
+            current: habit.current,
             total: Double(targetAmount) ?? 100,
             colorHex: color.toHex() ?? "#FF0000",
             isCompleted: false,

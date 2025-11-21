@@ -160,6 +160,17 @@ struct AddHabitView: View {
                                 AddHabitButtonBar(title: "Drink less Cigarette", color: .blue, icon: "🚬")
                                     .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.78))
                             }
+                            
+                            Button {
+                                viewModel.title = "Drink less Alcohol"
+                                viewModel.color = .orange
+                                viewModel.selectedEmoji = "🍺"
+                                viewModel.selectedUnit = "Bottle"
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Drink less Alcohol", color: .blue, icon: "🚬")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.79))
+                            }
 
                             Button {
                                 viewModel.title = "Learn a language"
@@ -225,6 +236,17 @@ struct AddHabitView: View {
                             } label: {
                                 AddHabitButtonBar(title: "Less Social App", color: .indigo, icon: "📱")
                                     .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.90))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Drink Glass Of Water"
+                                viewModel.color = .blue
+                                viewModel.selectedEmoji = "💧"
+                                viewModel.selectedUnit = "Glass Of Water"
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Drink Glass Of Water", color: .blue, icon: "💧")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.92))
                             }
 
 

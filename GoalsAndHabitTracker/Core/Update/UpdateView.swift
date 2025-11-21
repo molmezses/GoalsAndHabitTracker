@@ -405,4 +405,3 @@ struct EmojiPickerViewUpdate: View {
         .environmentObject(SoundViewModel())
 }
 
-

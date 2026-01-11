@@ -10,7 +10,13 @@ import Foundation
 
 class HomeViewViewModel: ObservableObject {
     
+
+    @Published  var showAddView = false
     
+    func openAddHabitView(){
+        showAddView = true
+    }
+
        
     
 }

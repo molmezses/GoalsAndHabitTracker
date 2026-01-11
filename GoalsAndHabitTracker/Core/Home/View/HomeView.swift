@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showAddView = false
     @State var animate: Bool = false
     @EnvironmentObject var viewModel: HabitBarSettingsViewModel
     @EnvironmentObject var habitViewModel: AddCustomHabitViewModel
     @EnvironmentObject var soundVM: SoundViewModel
     @EnvironmentObject var progressVM: ProgressViewModel
     @State var animate2: Bool = false
-    let secondaryAccentColor: Color = .red
+    @StateObject var homeViewModel = HomeViewViewModel()
 
 
 
@@ -26,7 +25,11 @@ struct HomeView: View {
             ZStack(alignment: .bottom) {
                 
                 if habitViewModel.habits.isEmpty {
-                    noItem()
+                    NoHabitView(
+                        onAddTapped: {
+                            homeViewModel.openAddHabitView()
+                        }
+                    )
                 }
                 VStack(spacing: 0) {
                     HStack {
@@ -110,9 +113,9 @@ struct HomeView: View {
                 }
                 HStack {
                     Spacer()
-                    // Add New Habit Button (Floating)
+                    // Add New Habit Button
                     Button(action: {
-                        showAddView = true
+                        homeViewModel.openAddHabitView()
                     }) {
                         HStack {
                             
@@ -128,7 +131,7 @@ struct HomeView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showAddView) {
+            .fullScreenCover(isPresented: $homeViewModel.showAddView) {
                 AddHabitView(soundVM: _soundVM)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
@@ -146,65 +149,8 @@ struct HomeView: View {
            
         }
     }
-    
-    
-    func noItem() -> some View {
-        VStack(spacing: 16) {
-            Spacer()
-            VStack {
-                Text("No Habits Yet! 👑")
-                    .font(.title)
-                    .fontWeight(.semibold)
-                
-                Text("Start building your best self today. Tap the button below to create your first habit and take control of your day!")
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 20)
-            }
-            .foregroundStyle(.gray)
-            
-            Button(action: {
-                showAddView = true
-            }) {
-                Text("Create a Habit 💡")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .frame(height: 50)
-                    .frame(maxWidth: .infinity)
-                    .background(animate2 ? .teal : .mint)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-            .padding(.horizontal , animate2 ? 40 : 50)
-            .shadow(color: (animate2 ? Color.teal : Color.mint).opacity(0.4),
-                    radius: animate2 ? 10 : 6,
-                    x: 0,
-                    y: animate2 ? 10 : 6)
-            .scaleEffect(animate2 ? 1.03 : 1.0)
-            .offset(y: animate2 ? -3 : 0)
-            Spacer()
-        }
-        .frame(maxHeight: .infinity)
-        .multilineTextAlignment(.center)
-        .padding(32)
-        .onAppear(perform: addAnimation)
-    }
+        
 
-    
-    func addAnimation(){
-        
-        guard !animate2 else {
-            return
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){
-            withAnimation(
-                Animation
-                    .easeInOut(duration: 2.0)
-                    .repeatForever()
-            ) {
-                animate2.toggle()
-            }
-        }
-    }
     
     func takvim() -> String {
         let today = Date()

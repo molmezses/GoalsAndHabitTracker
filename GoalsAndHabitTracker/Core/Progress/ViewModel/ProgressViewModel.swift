@@ -54,15 +54,9 @@ class ProgressViewModel: ObservableObject {
     
     //    Eğer habit bir struct türünde ise ve bu struct içinde diziyi değiştirmeye çalışıyorsanız, struct'ın fonksiyonunu mutating olarak işaretlemeniz gerekir. Aksi takdirde, bu türdeki veri yapıları değiştirilemez.
     
-    func fetchCompletedDayAndRemove(habit: inout Habit) {
-        
+    func removeTodayIfCompleted(habit: inout Habit){
         let today = formattedTodayDate()
-        
-        for _ in habit.complatedDay {
-            if let index = habit.complatedDay.firstIndex(of: today){
-                habit.complatedDay.remove(at: index)
-            }
-        }
+        habit.complatedDay.removeAll{ $0 == today }
     }
     
     func daysBetweenTodayAnd(start: String) -> Int? {

@@ -139,7 +139,7 @@ struct ProgressView: View {
                 
                 Button {
                     habit.current = max(habit.current - (habit.total / 10), 0)
-                    viewModel.fetchCompletedDayAndRemove(habit: &habit)
+                    viewModel.removeTodayIfCompleted(habit: &habit)
                     habit.missing = viewModel.calcMissingDay(habit: habit)
                     updateHabit(habit)
                 } label: {

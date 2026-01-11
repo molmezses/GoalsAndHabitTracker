@@ -12,7 +12,6 @@ struct HomeView: View {
     @EnvironmentObject var viewModel: HabitBarSettingsViewModel
     @EnvironmentObject var habitViewModel: AddCustomHabitViewModel
     @EnvironmentObject var soundVM: SoundViewModel
-    @EnvironmentObject var progressVM: ProgressViewModel
     @State var animate2: Bool = false
     @StateObject var homeViewModel = HomeViewViewModel()
 
@@ -32,35 +31,9 @@ struct HomeView: View {
                     )
                 }
                 VStack(spacing: 0) {
-                    HStack {
-                        Image(systemName: "star.circle.fill")
-                            .font(.title)
-                            .foregroundStyle(.mint)
-                        Spacer()
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack(spacing: 6) {
-                                Text(takvim())
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 16) {
-
-                            NavigationLink {
-                                SettingsView()
-                                    .navigationBarBackButtonHidden()
-                            } label: {
-                                Image(systemName: "gearshape")
-                                    .font(.title2)
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
+                    
+                    HomeViewHeaderView
+                    
 
                     // Calendar
                     HorizontalCalendarView()
@@ -69,6 +42,7 @@ struct HomeView: View {
                         .frame(height: 1)
                         .foregroundStyle(.gray.opacity(0.1))
                         .shadow(color: .gray, radius: 4, x: 0, y: 2)
+                    
 
                     // Scrollable Content
                     ZStack {
@@ -111,25 +85,9 @@ struct HomeView: View {
                     }
                     .background(viewModel.barStyle == .barstyle1 ? Color(.systemGroupedBackground) : Color.white)
                 }
-                HStack {
-                    Spacer()
-                    // Add New Habit Button
-                    Button(action: {
-                        homeViewModel.openAddHabitView()
-                    }) {
-                        HStack {
-                            
-                            Image(systemName: "plus.circle.fill")
-                            
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.mint)
-                        .cornerRadius(16)
-                        .padding(.horizontal)
-                        .shadow(radius: 6)
-                    }
-                }
+                
+                
+                AddHabitButton
             }
             .fullScreenCover(isPresented: $homeViewModel.showAddView) {
                 AddHabitView(soundVM: _soundVM)
@@ -150,15 +108,63 @@ struct HomeView: View {
         }
     }
         
+    
+    var AddHabitButton : some View {
+        HStack {
+            Spacer()
+            // Add New Habit Button
+            Button(action: {
+                homeViewModel.openAddHabitView()
+            }) {
+                HStack {
+                    
+                    Image(systemName: "plus.circle.fill")
+                    
+                }
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.mint)
+                .cornerRadius(16)
+                .padding(.horizontal)
+                .shadow(radius: 6)
+            }
+        }
+    }
+    
+    var HomeViewHeaderView : some View {
+        HStack {
+            Image(systemName: "star.circle.fill")
+                .font(.title)
+                .foregroundStyle(.mint)
+            Spacer()
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 6) {
+                    Text(homeViewModel.todayCalendarToStringHeader())
+                        .font(.title2)
+                        .fontWeight(.bold)
+                }
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 16) {
+
+                NavigationLink {
+                    SettingsView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Image(systemName: "gearshape")
+                        .font(.title2)
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(.horizontal)
+        .padding(.top, 12)
+    }
 
     
-    func takvim() -> String {
-        let today = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd, MMMM" // Gün ve Ay (kısa)
-        let formattedDate = formatter.string(from: today)
-        return formattedDate
-    }
+
 }
 
 #Preview {

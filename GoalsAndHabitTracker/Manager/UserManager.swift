@@ -16,11 +16,13 @@ class UserManager{
     
     var userId: String? {
         if let id = UserDefaults.standard.string(forKey: userIdKey) {
+            print(id)
             return id
         }
         else{
             let newId = UUID().uuidString
             UserDefaults.standard.set(newId , forKey: userIdKey)
+            print(newId)
             return newId
         }
     }

@@ -16,6 +16,14 @@ class HomeViewViewModel: ObservableObject {
     func openAddHabitView(){
         showAddView = true
     }
+    
+    func todayCalendarToStringHeader() -> String {
+        let today = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd, MMMM"
+        let formattedDate = formatter.string(from: today)
+        return formattedDate
+    }
 
        
     

@@ -79,14 +79,11 @@ class ProgressViewModel: ObservableObject {
         return components.day
     }
     
-    func calcMissingDay(habit: Habit) -> Int{
-        let missingDay = Int(daysBetweenTodayAnd(start: habit.startingDay) ?? 0) - Int(habit.complatedDay.count)
-        
-        if missingDay == 0 {
-            return 0
-        }
-        return missingDay
+    func calcMissingDay(habit: Habit) -> Int {
+        let totalDays = daysBetweenTodayAnd(start: habit.startingDay) ?? 0
+        return max(totalDays - habit.complatedDay.count, 0)
     }
+
     
     
     

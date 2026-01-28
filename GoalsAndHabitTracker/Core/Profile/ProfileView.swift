@@ -31,9 +31,9 @@ struct ProfileView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.title2)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
                             .padding(8)
-                            .background(Color.white)
+                            .background(Color(.systemBackground))
                             .clipShape(Circle())
 
                     }
@@ -50,7 +50,8 @@ struct ProfileView: View {
                 .background(Color.white)
 
                 ZStack {
-                    Color(.systemGroupedBackground).ignoresSafeArea()
+                    Color(.systemGroupedBackground)
+                        .ignoresSafeArea(edges: .bottom)
                     
                     ScrollView {
                         VStack(spacing: 24) {

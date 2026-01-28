@@ -23,9 +23,9 @@ struct FeedbackView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.title2)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
                             .padding(8)
-                            .background(Color.white)
+                            .background(Color(.systemBackground))
                             .clipShape(Circle())
                     }
                     
@@ -34,12 +34,12 @@ struct FeedbackView: View {
                     Text("Feedback & Suggestions")
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.black)
                     
                     Spacer()
                 }
                 .padding()
-                .background(Color.white.ignoresSafeArea(edges: .top))
+                .background(Color.white)
                 .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
                 
                 // Main Content
@@ -86,7 +86,7 @@ struct FeedbackView: View {
                                         .padding(12)
                                         .background(
                                             RoundedRectangle(cornerRadius: 12)
-                                                .fill(Color.white)
+                                                .fill(Color(.systemBackground))
                                                 .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
                                         )
                                         .overlay(

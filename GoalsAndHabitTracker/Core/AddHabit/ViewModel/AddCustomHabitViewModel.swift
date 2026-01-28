@@ -28,6 +28,9 @@ class AddCustomHabitViewModel: ObservableObject {
     @Published var selectedDays: Set<String> = []
     @Published var animate: Bool = false
     @Published var rapor: Bool = false
+    @Published var countingMode: CountingMode = .forward
+    @Published var timerTargetHours: String = "0"
+    @Published var timerTargetMinutes: String = "30"
     @Published var colors: [Color] = [
         Color(hex: "#FF3B30"), Color(hex: "#FF5B00"), Color(hex: "#FF7F00"), Color(hex: "#FF9F00"), Color(hex: "#FFBF00"), // Turuncu tonları
         Color(hex: "#34C759"), Color(hex: "#4CDE6A"), Color(hex: "#66E178"), Color(hex: "#7FF684"), Color(hex: "#99F490"), // Yeşil tonları
@@ -56,12 +59,57 @@ class AddCustomHabitViewModel: ObservableObject {
         Color(hex: "#D3D3D3"), Color(hex: "#B0B0B0"), Color(hex: "#A0A0A0"), Color(hex: "#808080"), Color(hex: "#707070") // Gri tonları
     ]
     @Published var erorMessage = ""
+    private var lastResetDate: Date?
+    private let calendar = Calendar.current
 
     init() {
         Task {
             for await newHabits in habitService.listenHabits() {
+                // Habits array'ini güncelle, ancak lastUpdated kontrolü yaparak eski verilerin üzerine yazılmasını önle
                 await MainActor.run {
-                    self.habits = newHabits
+                    print("📱 AddCustomHabitViewModel: \(newHabits.count) habit alındı")
+                    
+                    // Mevcut habits ile yeni habits'ı merge et (lastUpdated kontrolü ile)
+                    var mergedHabits: [Habit] = []
+                    
+                    for newHabit in newHabits {
+                        if let existingHabit = self.habits.first(where: { $0.id == newHabit.id }) {
+                            // Eğer mevcut habit daha yeni ise, onu kullan
+                            if let existingLastUpdated = existingHabit.lastUpdated,
+                               let newLastUpdated = newHabit.lastUpdated,
+                               existingLastUpdated > newLastUpdated {
+                                mergedHabits.append(existingHabit)
+                                print("📱 AddCustomHabitViewModel: Habit \(newHabit.title ?? "unknown") - Mevcut veri daha yeni, korunuyor")
+                            } else {
+                                mergedHabits.append(newHabit)
+                            }
+                        } else {
+                            // Yeni habit, ekle
+                            mergedHabits.append(newHabit)
+                        }
+                    }
+                    
+                    self.habits = mergedHabits.isEmpty ? newHabits : mergedHabits
+                    
+                    // Widget'a veri yaz
+                    print("📱 AddCustomHabitViewModel: Widget'a veri yazılıyor...")
+                    WidgetDataService.shared.saveHabitsForWidget(self.habits)
+                    print("📱 AddCustomHabitViewModel: Widget'a veri yazıldı")
+                }
+                
+                // Reset işlemini sadece yeni güne geçildiğinde yap
+                let today = calendar.startOfDay(for: Date())
+                if let lastReset = lastResetDate {
+                    let lastResetDay = calendar.startOfDay(for: lastReset)
+                    if lastResetDay < today {
+                        // Yeni güne geçilmiş, reset yap
+                        await habitService.resetHabitsIfNewDay(newHabits)
+                        lastResetDate = Date()
+                    }
+                } else {
+                    // İlk açılış, reset yap
+                    await habitService.resetHabitsIfNewDay(newHabits)
+                    lastResetDate = Date()
                 }
             }
         }
@@ -75,11 +123,22 @@ class AddCustomHabitViewModel: ObservableObject {
     }
     
     func createHabit(soundVM : SoundViewModel) {
+        // Timer modu için hedef süreyi hesapla (saniye cinsinden)
+        var timerTarget: Double = 0
+        if countingMode == .timer {
+            let hours = Double(timerTargetHours) ?? 0
+            let minutes = Double(timerTargetMinutes) ?? 0
+            timerTarget = (hours * 3600) + (minutes * 60)
+        }
+        
+        // Backward modu için current'i total'e eşitle
+        let initialCurrent = countingMode == .backward ? (Double(targetAmount) ?? 100) : 0
+        
         let habit = Habit(
             id: UUID().uuidString,
             title: title,
             emoji: selectedEmoji,
-            current: 0,
+            current: initialCurrent,
             total: Double(targetAmount) ?? 100,
             colorHex: color.toHex() ?? "#FF0000",
             isCompleted: false,
@@ -91,7 +150,12 @@ class AddCustomHabitViewModel: ObservableObject {
             complatedDay: [],
             missing: 0,
             longestSeries: 0,
-            startingDay: formattedDayMonth(from: Date())
+            startingDay: formattedDayMonth(from: Date()),
+            countingMode: countingMode,
+            timerElapsed: 0,
+            timerTarget: timerTarget,
+            isTimerRunning: false,
+            dailyNotes: [:]
         )
         
         guard validateInput(title: title) else {return}

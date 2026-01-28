@@ -25,9 +25,9 @@ struct SelectSoundView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.title2)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
                             .padding(8)
-                            .background(Color.white)
+                            .background(Color(.systemBackground))
                             .clipShape(Circle())
                     }
 
@@ -46,7 +46,7 @@ struct SelectSoundView: View {
                             .font(.title3)
                             .foregroundColor(.white)
                             .padding(8)
-                            .background(Color.white)
+                            .background(Color(.systemBackground))
                             .clipShape(Circle())
                     }
                 }
@@ -56,7 +56,8 @@ struct SelectSoundView: View {
                 Spacer()
                 
                 ZStack {
-                    Color(.systemGroupedBackground).ignoresSafeArea()
+                    Color(.systemGroupedBackground)
+                        .ignoresSafeArea(edges: .bottom)
                     
                     ScrollView {
                         VStack {

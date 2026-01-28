@@ -81,17 +81,15 @@ class FirestoreManager {
     }
     
     func deleteHabit(_ habit: Habit, completion: @escaping (Result<Void, Error>) -> Void) {
-        let db = Firestore.firestore()
-        
         guard let habitID = habit.id else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Habit ID bulunamadı."])))
+            print("axc")
             return
         }
         
-        
-        
         guard let userID = UserManager.shared.userId else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User ID bulunamadı."])))
+            print("axcf")
             return
         }
 
@@ -102,14 +100,15 @@ class FirestoreManager {
         
         habitRef.delete { error in
             if let error = error {
+                print("Firestore silme hatası: \(error.localizedDescription)")
                 completion(.failure(error))
             } else {
+                print("Habit Firestore'dan başarıyla silindi: \(habitID)")
+                // Başarılı silme sonrası notification'ı kaldır
+                NotificationManager.instance.removeNotification(identifier: habitID)
                 completion(.success(()))
             }
         }
-        
-        NotificationManager.instance.removeNotification(identifier: habitID)
-
     }
 
 

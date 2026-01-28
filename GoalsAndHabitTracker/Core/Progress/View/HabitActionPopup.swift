@@ -41,7 +41,7 @@ struct HabitActionPopup: View {
                     }
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
+                            .fill(Color(.systemBackground))
                             .shadow(radius: 8)
                     )
                     .padding(.trailing)

@@ -66,7 +66,16 @@ class HabitService {
 
             // Eğer bugünle aynı değilse (yeni güne geçilmişse)
             if lastUpdateDay < today {
-                habit.current = 0
+                // Moda göre reset
+                switch habit.countingMode {
+                case .forward:
+                    habit.current = 0
+                case .backward:
+                    habit.current = habit.total
+                case .timer:
+                    habit.timerElapsed = 0
+                    habit.isTimerRunning = false
+                }
                 habit.lastUpdated = Date()
 
                 do {

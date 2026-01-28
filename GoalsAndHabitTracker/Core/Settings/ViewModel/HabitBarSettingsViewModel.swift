@@ -13,12 +13,15 @@ import UIKit
 
 
 enum habitBarStyle: Int {
-    case barstyle1 = 1
-    case barstyle2 = 2
-    case barstyle3 = 3
-    case barstyle4 = 4
-    case barstyle5 = 5
-    case barstyle6 = 6
+    case barstyle1 = 1  // Default - Simple
+    case barstyle2 = 2  // Progress Bar Fill
+    case barstyle3 = 3  // Progress Bar Thin
+    case barstyle4 = 4  // Border with Progress
+    case barstyle5 = 5  // Thin Side Bar
+    case barstyle6 = 6  // Border Only
+    case barstyle7 = 7  // Card with Shadow
+    case barstyle8 = 8  // Gradient Progress
+    case barstyle9 = 9  // Compact Minimal
 }
 
 class HabitBarSettingsViewModel: ObservableObject {

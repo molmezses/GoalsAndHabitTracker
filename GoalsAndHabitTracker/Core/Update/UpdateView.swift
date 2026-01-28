@@ -74,12 +74,19 @@ struct UpdateView: View {
             }
         }
         .padding()
-        .background(viewModel.color.opacity(0.2))
+        .background(
+            ZStack {
+                Color(.systemBackground)
+                viewModel.color.opacity(0.15)
+            }
+            .ignoresSafeArea(edges: .top)
+        )
     }
 
     private var contentView: some View {
         ZStack {
-            viewModel.color.opacity(0.2).ignoresSafeArea()
+            viewModel.color.opacity(0.2)
+                .ignoresSafeArea(edges: .bottom)
 
             ScrollView {
                 VStack(spacing: 16) {
@@ -122,7 +129,7 @@ struct UpdateView: View {
                             .frame(width: 36, height: 16)
                             .foregroundStyle(viewModel.color)
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
@@ -142,18 +149,78 @@ struct UpdateView: View {
             }
 
             Divider()
+            
+            // Counting Mode Selection - Compact Minimal Design
+            settingsRow(title: "Counting Mode") {
+                HStack(spacing: 8) {
+                    ForEach(CountingMode.allCases, id: \.self) { mode in
+                        Button {
+                            viewModel.countingMode = mode
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: modeIcon(mode))
+                                    .font(.caption)
+                                    .foregroundColor(viewModel.countingMode == mode ? .white : .black)
+                                Text(modeShortName(mode))
+                                    .font(.caption2)
+                                    .foregroundColor(viewModel.countingMode == mode ? .white : .black)
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(viewModel.countingMode == mode ? viewModel.color : Color(.systemGray6))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                    }
+                }
+            }
+            
+            // Timer Target Input (only for timer mode)
+            if viewModel.countingMode == .timer {
+                Divider()
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Target Time")
+                        .font(.subheadline)
+                    HStack(spacing: 12) {
+                        VStack(alignment: .leading) {
+                            Text("Hours")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            TextField("0", text: $viewModel.timerTargetHours)
+                                .keyboardType(.numberPad)
+                                .padding(8)
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                        VStack(alignment: .leading) {
+                            Text("Minutes")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            TextField("30", text: $viewModel.timerTargetMinutes)
+                                .keyboardType(.numberPad)
+                                .padding(8)
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                    }
+                }
+            }
 
-            settingsRow(title: "Target Value") {
-                TextField("100", text: $viewModel.targetAmount)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.leading)
-                    .padding(8)
-                    .frame(width: 60)
-                    .background(Color(.systemGray6))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .focused($focusState)
-                Text("/\(viewModel.selectedUnit)")
-                    .font(.subheadline)
+            Divider()
+
+            if viewModel.countingMode != .timer {
+                settingsRow(title: "Target Value") {
+                    TextField("100", text: $viewModel.targetAmount)
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.leading)
+                        .padding(8)
+                        .frame(width: 60)
+                        .background(Color(.systemGray6))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .focused($focusState)
+                    Text("/\(viewModel.selectedUnit)")
+                        .font(.subheadline)
+                }
+                Divider()
             }
 
             Divider()
@@ -187,7 +254,7 @@ struct UpdateView: View {
                 } label: {
                     HStack {
                         Text(viewModel.selectedUnit)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.black)
                         Image(systemName: "chevron.down")
                             .foregroundColor(.gray)
                     }
@@ -209,7 +276,7 @@ struct UpdateView: View {
                 .foregroundColor(.red)
         }
         .padding()
-        .background(.white)
+        .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
     }
@@ -270,13 +337,13 @@ struct UpdateView: View {
                 settingsRow(title: "Choose a Reminder sound") {
                     Text("🎵")
                     Image(systemName: "chevron.right")
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
                 .foregroundStyle(.black)
             }
         }
         .padding()
-        .background(.white)
+        .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
     }
@@ -287,7 +354,7 @@ struct UpdateView: View {
                 .toggleStyle(SwitchToggleStyle(tint: viewModel.color))
         }
         .padding()
-        .background(.white)
+        .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
     }
@@ -337,6 +404,24 @@ struct UpdateView: View {
                 .font(.subheadline)
             Spacer()
             content()
+        }
+    }
+    
+    // Helper for mode icons
+    private func modeIcon(_ mode: CountingMode) -> String {
+        switch mode {
+        case .forward: return "arrow.up.circle.fill"
+        case .backward: return "arrow.down.circle.fill"
+        case .timer: return "timer"
+        }
+    }
+    
+    // Helper for short mode names
+    private func modeShortName(_ mode: CountingMode) -> String {
+        switch mode {
+        case .forward: return "↑"
+        case .backward: return "↓"
+        case .timer: return "⏱"
         }
     }
 }

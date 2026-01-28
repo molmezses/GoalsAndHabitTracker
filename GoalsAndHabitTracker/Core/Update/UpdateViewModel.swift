@@ -34,6 +34,9 @@ class UpdateViewModel: ObservableObject {
     @Published var longestSeries: Int = 0
     @Published var rapor: Bool = false
     @Published var startingDay:String = ""
+    @Published var countingMode: CountingMode = .forward
+    @Published var timerTargetHours: String = "0"
+    @Published var timerTargetMinutes: String = "30"
     @Published var colors: [Color] = [
         Color(hex: "#FF3B30"), Color(hex: "#FF5B00"), Color(hex: "#FF7F00"), Color(hex: "#FF9F00"), Color(hex: "#FFBF00"), // Turuncu tonları
         Color(hex: "#34C759"), Color(hex: "#4CDE6A"), Color(hex: "#66E178"), Color(hex: "#7FF684"), Color(hex: "#99F490"), // Yeşil tonları
@@ -77,13 +80,27 @@ class UpdateViewModel: ObservableObject {
         missing = habit.missing
         longestSeries = habit.longestSeries
         sound = habit.sound
-        
+        countingMode = habit.countingMode
+        if habit.timerTarget > 0 {
+            let hours = Int(habit.timerTarget) / 3600
+            let minutes = (Int(habit.timerTarget) % 3600) / 60
+            timerTargetHours = "\(hours)"
+            timerTargetMinutes = "\(minutes)"
+        }
     }
 
     
 
     func createHabit(habit: Habit, soundVM : SoundViewModel) {
-        let habit = Habit(
+        // Timer modu için hedef süreyi hesapla (saniye cinsinden)
+        var timerTarget: Double = habit.timerTarget
+        if countingMode == .timer {
+            let hours = Double(timerTargetHours) ?? 0
+            let minutes = Double(timerTargetMinutes) ?? 0
+            timerTarget = (hours * 3600) + (minutes * 60)
+        }
+        
+        let updatedHabit = Habit(
             id: habit.id,
             title: title,
             emoji: selectedEmoji,
@@ -99,12 +116,16 @@ class UpdateViewModel: ObservableObject {
             complatedDay: habit.complatedDay,
             missing: missing,
             longestSeries: longestSeries,
-            startingDay: startingDay
-            
+            startingDay: startingDay,
+            countingMode: countingMode,
+            timerElapsed: habit.timerElapsed,
+            timerTarget: timerTarget,
+            isTimerRunning: false,
+            dailyNotes: habit.dailyNotes
         )
 
         Task {
-            try await habitService.addHabit(habit)
+            try await habitService.updateHabit(updatedHabit)
         }
     }
     

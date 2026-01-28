@@ -29,10 +29,10 @@ struct ButtonBar: View {
             Text(title)
             Spacer()
             Image(systemName: "chevron.right")
-                .foregroundStyle(.gray)
+                .foregroundStyle(.secondary)
         }
         .padding(12)
-        .background(.white)
+        .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.horizontal)
         .fontDesign(.rounded)

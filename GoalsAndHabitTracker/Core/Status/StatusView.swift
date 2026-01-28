@@ -26,7 +26,8 @@ struct StatusView: View {
         NavigationStack {
             
             ZStack {
-                Color(.systemGroupedBackground).ignoresSafeArea()
+                Color(.systemGroupedBackground)
+                    .ignoresSafeArea(edges: .bottom)
                     ScrollView {
                         VStack {
                             VStack {
@@ -42,7 +43,7 @@ struct StatusView: View {
                                     }
                                     .padding()
                                     .frame(maxWidth: .infinity)
-                                    .background(.white)
+                                    .background(Color(.systemBackground))
                                     .clipShape(RoundedRectangle(cornerRadius: 14))
                                     .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
                                     .padding(.horizontal)
@@ -117,7 +118,7 @@ struct StatusView: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity , alignment: .center)
-                            .background(.white)
+                            .background(Color(.systemBackground))
                             .clipShape(RoundedRectangle(cornerRadius: 14))
                             .padding()
                             .opacity(animate ? 1 : 0)
@@ -136,7 +137,7 @@ struct StatusView: View {
                                 
                                 HStack(spacing: 8) {
                                     InfoCard(title: viewModel.currentMonthCompletionPercentage(habit), subtitle: "Monthly Goals", icon: "checkmark.rectangle.stack", color: .purple)
-                                    InfoCard(title: "\(habit.longestSeries)", subtitle: "Longest Series", icon: "figure.run.treadmill", color: .blue)
+                                    InfoCard(title: "\(viewModel.calculateLongestSeries(habit))", subtitle: "Longest Series", icon: "figure.run.treadmill", color: .blue)
                                 }
                                 
                                 HStack(spacing: 8) {
@@ -274,7 +275,7 @@ struct StatusView: View {
         let formattedDate = formattedFullDate(day: day.day, month: currentMonth, year: currentYear)
         
         if day.isCurrentMonth, habit.complatedDay.contains(formattedDate) {
-            return .white
+            return Color(.systemBackground)
         }
 
         if day.isCurrentMonth {

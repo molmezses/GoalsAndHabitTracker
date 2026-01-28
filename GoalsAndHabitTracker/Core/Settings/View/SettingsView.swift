@@ -55,12 +55,13 @@ struct SettingsView: View {
                     }
                 }
                 .padding()
-                .background(Color.white)
+                .background(Color(.systemBackground))
                 
                 Spacer()
                 
                 ZStack {
-                    Color(.systemGroupedBackground).ignoresSafeArea()
+                    Color(.systemGroupedBackground)
+                        .ignoresSafeArea(edges: .bottom)
                     
                     ScrollView {
                         VStack {
@@ -104,7 +105,7 @@ struct SettingsView: View {
                                 } label: {
                                     HStack {
                                         Text("English")
-                                            .foregroundColor(.primary)
+                                            .foregroundColor(.black)
                                         Image(systemName: "chevron.down")
                                             .foregroundColor(.gray)
                                     }
@@ -116,7 +117,7 @@ struct SettingsView: View {
 
                             }
                             .padding(12)
-                            .background(.white)
+                            .background(Color(.systemBackground))
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .padding(.horizontal)
                             .fontDesign(.rounded)
@@ -127,48 +128,6 @@ struct SettingsView: View {
                             .onAppear{
                                 animate = true
                             }
-                            
-                            
-                            HStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .frame(width: 32, height: 32)
-                                    .foregroundStyle(.orange)
-                                    .overlay {
-                                        Image(systemName: "moon.circle")
-                                            .foregroundStyle(.white)
-                                    }
-                                
-                                Text("Dark Mode")
-                                Spacer()
-                                Menu {
-                                    Button("Light"){}
-                                } label: {
-                                    HStack {
-                                        Text("Light")
-                                            .foregroundColor(.primary)
-                                        Image(systemName: "chevron.down")
-                                            .foregroundColor(.gray)
-                                    }
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 6)
-                                    .background(Color(.systemGray6))
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                }
-
-                            }
-                            .padding(12)
-                            .background(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .padding(.horizontal)
-                            .fontDesign(.rounded)
-                            .shadow(color: .gray.opacity(0.1), radius: 4, x: 0, y: 1)
-                            .opacity(animate ? 1 : 0)
-                            .offset(y: animate ? 0 : 20)
-                            .animation(.easeInOut(duration: 0.6), value: animate)
-                            .onAppear{
-                                animate = true
-                            }
-                            
                             
                             NavigationLink {
                                 HabitBarSettings()

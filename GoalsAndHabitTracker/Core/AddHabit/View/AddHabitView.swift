@@ -30,7 +30,7 @@ struct AddHabitView: View {
                             .font(.title2)
                             .foregroundColor(.gray)
                             .padding(8)
-                            .background(Color.white)
+                            .background(Color(.systemBackground))
                             .clipShape(Circle())
                     }
 
@@ -49,7 +49,7 @@ struct AddHabitView: View {
                             .font(.title3)
                             .foregroundColor(.white)
                             .padding(8)
-                            .background(Color.white)
+                            .background(Color(.systemBackground))
                             .clipShape(Circle())
                     }
                 }
@@ -59,7 +59,8 @@ struct AddHabitView: View {
                 Spacer()
                 
                 ZStack {
-                    Color(.systemGroupedBackground).ignoresSafeArea()
+                    Color(.systemGroupedBackground)
+                        .ignoresSafeArea(edges: .bottom)
                     
                     ScrollView {
                         VStack {
@@ -161,16 +162,7 @@ struct AddHabitView: View {
                                     .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.78))
                             }
                             
-                            Button {
-                                viewModel.title = "Drink less Alcohol"
-                                viewModel.color = .orange
-                                viewModel.selectedEmoji = "🍺"
-                                viewModel.selectedUnit = "Bottle"
-                                navigateCusHabit = true
-                            } label: {
-                                AddHabitButtonBar(title: "Drink less Alcohol", color: .blue, icon: "🚬")
-                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.79))
-                            }
+
 
                             Button {
                                 viewModel.title = "Learn a language"
@@ -247,6 +239,88 @@ struct AddHabitView: View {
                             } label: {
                                 AddHabitButtonBar(title: "Drink Glass Of Water", color: .blue, icon: "💧")
                                     .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.92))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Practice Piano"
+                                viewModel.color = .purple
+                                viewModel.selectedEmoji = "🎹"
+                                viewModel.selectedUnit = "Minute"
+                                viewModel.countingMode = .timer
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Practice Piano", color: .purple, icon: "🎹")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.94))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Limit Screen Time"
+                                viewModel.color = .indigo
+                                viewModel.selectedEmoji = "📱"
+                                viewModel.selectedUnit = "Hour"
+                                viewModel.countingMode = .backward
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Limit Screen Time", color: .indigo, icon: "📱")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.96))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Study"
+                                viewModel.color = .blue
+                                viewModel.selectedEmoji = "📖"
+                                viewModel.selectedUnit = "Hour"
+                                viewModel.countingMode = .timer
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Study", color: .blue, icon: "📖")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 0.98))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Walking"
+                                viewModel.color = .green
+                                viewModel.selectedEmoji = "🚶"
+                                viewModel.selectedUnit = "Step"
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Walking", color: .green, icon: "🚶")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 1.00))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Journaling"
+                                viewModel.color = .orange
+                                viewModel.selectedEmoji = "📔"
+                                viewModel.selectedUnit = "Page"
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Journaling", color: .orange, icon: "📔")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 1.02))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Practice Coding"
+                                viewModel.color = .teal
+                                viewModel.selectedEmoji = "💻"
+                                viewModel.selectedUnit = "Hour"
+                                viewModel.countingMode = .timer
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Practice Coding", color: .teal, icon: "💻")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 1.04))
+                            }
+                            
+                            Button {
+                                viewModel.title = "Reduce Coffee"
+                                viewModel.color = .brown
+                                viewModel.selectedEmoji = "☕"
+                                viewModel.selectedUnit = "Cup"
+                                viewModel.countingMode = .backward
+                                navigateCusHabit = true
+                            } label: {
+                                AddHabitButtonBar(title: "Reduce Coffee", color: .brown, icon: "☕")
+                                    .modifier(HabitButtonAppearModifier(animate: $animate, delay: 1.06))
                             }
 
 
